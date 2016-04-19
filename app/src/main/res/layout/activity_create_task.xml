@@ -19,17 +19,32 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/taskOwnerLabel"
             android:text="Task Owner:"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
-
-        <TimePicker
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-        </TimePicker>
+            <NumberPicker
+                android:id="@+id/durationPickerHour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </NumberPicker>
+
+            <NumberPicker
+                android:paddingLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </NumberPicker>
+        </LinearLayout>
+
+
 
         <Button
+            android:id="@+id/createTaskButton"
             android:layout_gravity="right"
             android:text="create Task"
             android:layout_width="wrap_content"
