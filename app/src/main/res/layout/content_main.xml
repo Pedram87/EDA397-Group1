@@ -15,44 +15,19 @@
 <TextView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:text="@string/login"
+    android:text="@string/welcome_to_app"
     android:textSize="30dp"
     android:id="@+id/textView" />
 
     <Button
 
-        android:text="@string/login"
+        android:text="@string/continue_word"
         android:layout_marginTop="88dp"
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="sendMessage"
-        android:layout_below="@+id/editText2"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:ems="10"
-        android:id="@+id/editText"
-        android:layout_alignTop="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="195dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/editText2"
-        android:editable="true"
-        android:enabled="true"
-        android:autoText="false"
-        android:password="false"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/editText"
-        android:layout_alignStart="@+id/editText" />
+        android:layout_centerVertical="true" />
 
 </RelativeLayout>
