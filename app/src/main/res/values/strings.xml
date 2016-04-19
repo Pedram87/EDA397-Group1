@@ -4,5 +4,5 @@
     <string name="Welcome">Welcome!</string>
     <string name="Continue">Continue</string>
     <string name="title_activity_second">SecondActivity</string>
-
+    <string name="login">Login</string>
 </resources>
