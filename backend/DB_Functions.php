@@ -32,8 +32,8 @@
         }
 
         // Register user
-        public function registerUser($email, $nickname, $password) {
-            $query = "INSERT INTO Users(email, nickname, password) VALUES ('$email', '$nickname', '$password')";
+        public function registerUser($email, $name, $password) {
+            $query = "INSERT INTO Users(email, name, password) VALUES ('$email', '$name', '$password')";
             $result = mysql_query($query);
             
             return true;

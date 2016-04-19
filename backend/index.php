@@ -23,7 +23,7 @@
         // Check if tag exists
         if ($tag && $tag != "") {
             $email              = $array["email"];
-            $nickname           = $array["nickname"];
+            $name               = $array["name"];
             $password           = $array["password"];
 
             // Set response JSON to default values
@@ -38,7 +38,7 @@
                 if (!$userExists) {
                     // Generate a secure password
                     $hash = password_hash($password, PASSWORD_DEFAULT);
-                    $bool = $db->registerUser($email, $hash, $firstname, $lastname);
+                    $bool = $db->registerUser($email, $name, $hash);
 
                     if ($bool) {
                         $response["success"]         = 1;
