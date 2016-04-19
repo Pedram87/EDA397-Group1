@@ -14,7 +14,7 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(View view) {
-        Intent intent = new Intent(this, SecondActivity.class);
+        Intent intent = new Intent(this, CreateTaskActivity.class);
         startActivity(intent);
     }
 
