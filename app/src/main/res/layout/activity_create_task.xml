@@ -31,13 +31,15 @@
             <NumberPicker
                 android:id="@+id/durationPickerHour"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="60dp"
+                >
             </NumberPicker>
 
             <NumberPicker
+                android:id="@+id/durationPickerMinute"
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="60dp">
             </NumberPicker>
         </LinearLayout>
 

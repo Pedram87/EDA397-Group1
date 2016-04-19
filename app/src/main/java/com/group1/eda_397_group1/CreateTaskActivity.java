@@ -19,9 +19,16 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         EditText taskName = (EditText) findViewById(R.id.taskName);
         TextView taskOwnerLabel = (TextView) findViewById(R.id.taskOwnerLabel);
-        NumberPicker spinnerDuration = (NumberPicker) findViewById(R.id.durationPicker);
+        NumberPicker durationHour = (NumberPicker) findViewById(R.id.durationPickerHour);
+        NumberPicker durationMinute = (NumberPicker) findViewById(R.id.durationPickerMinute);
         Button createTaskButton = (Button) findViewById(R.id.createTaskButton);
 
+
+        durationHour.setMaxValue(10);
+        durationHour.setMinValue(0);
+
+        durationMinute.setMaxValue(50);
+        durationMinute.setMinValue(0);
 
 
     }
