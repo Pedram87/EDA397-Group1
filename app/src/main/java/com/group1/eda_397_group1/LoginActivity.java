@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,8 +30,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -352,38 +368,86 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+            JSONObject jsonReturnObject = null;
+            JSONParser parser = new JSONParser();
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+            String result = null;
+            try{
+                URL url = new URL("http://userapan.myds.me/pair_server/backend/index.php");
+                String query = parser.getLoginJSON(mEmail, mPassword).toString();
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setConnectTimeout(15000);
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setRequestProperty("Content-type", "application/json");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+                conn.connect();
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(
+                        conn.getInputStream()));
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
                 }
+                result = sb.toString();
+                Log.e("LoginActivity.login", result);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            return true;
+
+/*            try {
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost httppost = new HttpPost("http://userapan.myds.me/achievement-app/backend/index.php");
+
+                // Get JSON string to be sent from parameters
+                StringEntity se = new StringEntity(parser.getLoginJSON(email, password).toString());
+                httppost.setEntity(se);
+
+                // Send JSON string to server
+                HttpResponse response = httpclient.execute(httppost);
+
+                //Store server response in string
+                String responseStr = EntityUtils.toString(response.getEntity());
+
+                // Create new JSONObject from response string
+                jsonReturnObject = new JSONObject(responseStr);
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            // TODO: register the new account here.
-            return true;
+            // Return the response JSONObject to onPostExecute method
+            return jsonReturnObject;*/
+            //return null;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            showProgress(false);
 
-            if (success) {
-                finish();
+            // Finish the registration process if there is a server response
+/*            if (jsonObject != null) {
+                try {
+                    finishLogin(jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
+                passwordView.setError(getString(R.string.error_incorrect_password));
+                passwordView.requestFocus();
+            }*/
         }
 
         @Override
