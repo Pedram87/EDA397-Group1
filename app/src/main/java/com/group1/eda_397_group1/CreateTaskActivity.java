@@ -27,7 +27,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         durationHour.setMaxValue(10);
         durationHour.setMinValue(0);
 
-        durationMinute.setMaxValue(59);
+        durationMinute.setMaxValue(50);
         durationMinute.setMinValue(0);
 
 
