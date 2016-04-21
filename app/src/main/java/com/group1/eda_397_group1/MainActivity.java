@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //redirecting to login/register
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, CreateTaskActivity.class);
         startActivity(intent);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
