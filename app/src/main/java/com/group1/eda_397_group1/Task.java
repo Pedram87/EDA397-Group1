@@ -59,4 +59,15 @@ public class Task {
     public void setPairprogramer2(User pairprogramer2) {
         this.pairprogramer2 = pairprogramer2;
     }
+
+    @Override
+    public String toString() {
+        return "Task[" +
+                "name='" + name + '\'' +
+                ", duration=" + duration +
+                ", owner=" + owner +
+                ", pairprogramer1=" + pairprogramer1 +
+                ", pairprogramer2=" + pairprogramer2 +
+                ']';
+    }
 }
