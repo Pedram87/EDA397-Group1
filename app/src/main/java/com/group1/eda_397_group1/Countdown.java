@@ -18,9 +18,9 @@ public class Countdown extends AppCompatActivity {
         txt = (TextView) findViewById(R.id.timeView);
     }
 
-    public void setTime(View view){
+    public void setTime(View view, long tm){
         String toSend;
-        toSend = ( (timeLength / 3600000) + ":" + (timeLength / 60000) + ":" + (timeLength / 1000));
+        toSend = ( (tm / 3600000) + ":" + (tm / 60000) + ":" + (tm / 1000));
         txt.setText( toSend );
     }
 
