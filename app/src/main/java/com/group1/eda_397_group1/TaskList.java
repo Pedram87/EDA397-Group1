@@ -50,10 +50,10 @@ public class TaskList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-                /*//TODO: see if you can send a custom class through putexta. Maybe using "implements serializable" in the Task class?
+                //TODO: see if you can send a custom class through putexta. Maybe using "implements serializable" in the Task class?
                 Intent taskIntent = new Intent(TaskList.this, CreateTaskActivity.class);
                 taskIntent.putExtra("task", taskList.get(position));
-                startActivity(taskIntent);*/
+                startActivity(taskIntent);
 
             }
         });

@@ -1,9 +1,11 @@
 package com.group1.eda_397_group1;
 
+import java.io.Serializable;
+
 /**
  * Created by jesper on 2016-04-19.
  */
-public class Task {
+public class Task implements Serializable {
 
     private String name;
     private int duration;
