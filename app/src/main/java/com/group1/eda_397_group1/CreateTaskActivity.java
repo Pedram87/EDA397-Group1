@@ -1,11 +1,14 @@
 package com.group1.eda_397_group1;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -13,11 +16,26 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateTaskActivity extends AppCompatActivity {
 
     private CreatePairProgTask cppTask;
+    private GetUserDataFromDatabase getUserDataFromDatabaseTask;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,10 +47,37 @@ public class CreateTaskActivity extends AppCompatActivity {
         final NumberPicker durationHour = (NumberPicker) findViewById(R.id.durationPickerHour);
         final NumberPicker durationMinute = (NumberPicker) findViewById(R.id.durationPickerMinute);
         Button createTaskButton = (Button) findViewById(R.id.createTaskButton);
+        Spinner user1Selector = (Spinner) findViewById(R.id.user1);
+        Spinner user2Selector = (Spinner) findViewById(R.id.user2);
+
+        getUserDataFromDatabaseTask = new GetUserDataFromDatabase();
+        ArrayList<User> users = null;
+        getUserDataFromDatabaseTask.execute((Void)null);
+        users = DatabaseDummy.getInstance().getUsers();//getUserDataFromDatabaseTask.getUsers();
+
+        List<String> usersString = new ArrayList<>();
+
+        for(User u: users){
+            usersString.add(u.getFirstName() + " " + u.getLastName());
+        }
+
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, usersString);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, usersString);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        user1Selector.setAdapter(dataAdapter);
+        user2Selector.setAdapter(dataAdapter2);
+
 
         createTaskButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Task task = new Task(taskName.getText().toString(), ((durationHour.getValue()*60)+durationMinute.getValue()), new User("","",""), new User("","",""), new User("","",""));
+                Task task = new Task(taskName.getText().toString(), ((durationHour.getValue() * 60) + durationMinute.getValue()), new User("", "", ""), new User("", "", ""), new User("", "", ""));
 
                 cppTask = new CreatePairProgTask(task);
                 cppTask.execute((Void) null);
@@ -47,6 +92,93 @@ public class CreateTaskActivity extends AppCompatActivity {
         durationMinute.setMinValue(0);
 
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "CreateTask Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.group1.eda_397_group1/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "CreateTask Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.group1.eda_397_group1/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
+
+
+    public class GetUserDataFromDatabase extends AsyncTask<Void, Void, ArrayList<User>> {
+        DatabaseDummy database;
+        ArrayList<User> users;
+
+
+        public GetUserDataFromDatabase() {
+            database = DatabaseDummy.getInstance();
+            users = null;
+        }
+
+        @Override
+        protected ArrayList<User> doInBackground(Void... params) {
+//            JSONObject jsonReturnObject = null;
+//            JSONParser parser = new JSONParser();
+//
+//            String result = null;
+            try {
+
+                users = database.getUsers();
+
+            } catch (Exception e) {
+
+            }
+
+            return users;
+        }
+
+        @Override
+        protected void onPostExecute(final ArrayList<User> us) {
+            users = us;
+        }
+
+        @Override
+        protected void onCancelled() {
+            users = null;
+            // showProgress(false);
+        }
+
+        public ArrayList<User> getUsers(){
+            return users;
+        }
     }
 
 
@@ -54,7 +186,7 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         private Task task;
 
-        public CreatePairProgTask(Task task){
+        public CreatePairProgTask(Task task) {
             this.task = task;
         }
 
@@ -64,11 +196,11 @@ public class CreateTaskActivity extends AppCompatActivity {
             JSONParser parser = new JSONParser();
 
             String result = null;
-            try{
+            try {
 
                 Log.e("CreatePairProgActivity", task.toString()); //result);
 
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
 
