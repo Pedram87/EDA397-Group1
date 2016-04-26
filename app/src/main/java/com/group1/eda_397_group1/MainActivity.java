@@ -13,7 +13,7 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(View view) {
-        Intent intent = new Intent(this, CreateTaskActivity.class);
+        Intent intent = new Intent(this, TaskList.class);
         startActivity(intent);
     }
 

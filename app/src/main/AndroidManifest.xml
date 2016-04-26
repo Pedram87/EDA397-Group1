@@ -27,7 +27,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.group1.eda_397_group1.MainActivity" />
         </activity>
-        <activity android:name=".CreateTaskActivity"></activity>
+        <activity android:name=".CreateTaskActivity" />
+        <activity android:name=".TaskList"></activity>
     </application>
 
 </manifest>
