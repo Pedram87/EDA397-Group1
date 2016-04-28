@@ -18,5 +18,9 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
+        <string name= "Username">Enter your desired username here </string>
+        <string name= "Password">Enter your desired passwrod here</string>
+        <string name= "Confirm">Confirm</string>
+        <string name= "Create user">Create user</string>
     </string>
 </resources>
