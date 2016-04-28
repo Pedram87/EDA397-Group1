@@ -23,14 +23,34 @@
         // Check if tag exists
         if ($tag && $tag != "") {
             $email              = $array["email"];
-            $name               = $array["name"];
+            $nickname           = $array["nickname"];
             $password           = $array["password"];
 
             // Set response JSON to default values
             $response = array("tag" => $tag, "success" => 0, "error" => 0);
 
             // Check the tag
-            if ($tag == "register") {
+            if ($tag == "login") {
+                // Check for user
+                $user = $db->getUserByUserID($email);
+
+                if ($user) {
+                    $hash = $user["password"];
+
+                    if (password_verify($password, $hash)) {
+                        $response["success"]            = 1;
+                        $response["user"]["email"]      = $user["email"];
+                        $response["user"]["nickname"]   = $user["nickname"];
+                    } else {
+                        $response["error"]              = 1;
+                        $response["error_msg"]          = "Password incorrect";
+                    }
+                } else {
+                    $response["error"]                  = 1;
+                    $response["error_msg"]              = "Could not find \"".$email."\"";
+                }
+                echo json_encode($response);
+            } else if ($tag == "register") {
                 // Register user
                 $userExists = $db->isUserExisting($email);
 
@@ -41,19 +61,21 @@
                     $bool = $db->registerUser($email, $name, $hash);
 
                     if ($bool) {
-                        $response["success"]         = 1;
+                        $response["success"]            = 1;
                     } else {
-                        $response["error"]           = 1;
-                        $response["error_msg"]       = "Error, could not register";
+                        $response["error"]              = 1;
+                        $response["error_msg"]          = "Error, could not register";
                     }                    
                 } else {
-                    $response["error"]           = 1;
-                    $response["error_msg"]       = "Error, email already exists";                    
+                    $response["error"]                  = 1;
+                    $response["error_msg"]              = "Error, email already exists";
                 }
                 echo json_encode($response);
             } else {
-            	// Error in tag
-                echo "Invalid action tag!";
+                // Error in tag
+                $response["error"]                      = 1;
+                $response["error_msg"]                  = "Error, invalid action tag";
+                echo json_encode($response);
             }
         } else {
             echo "Access denied!";

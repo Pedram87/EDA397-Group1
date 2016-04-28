@@ -31,9 +31,24 @@
             }
         }
 
+        // Get user by email
+        public function getUserByUserID($email) {
+            $query = "SELECT * FROM Users WHERE email = '$email'";
+            $result = mysql_query($query) or die(mysql_error());
+            // Check for result 
+            $rows = mysql_num_rows($result);
+            if ($rows > 0) {
+                $result = mysql_fetch_array($result);
+                return $result;
+            } else {
+                // user not found
+                return false;
+            }
+        }
+
         // Register user
-        public function registerUser($email, $name, $password) {
-            $query = "INSERT INTO Users(email, name, password) VALUES ('$email', '$name', '$password')";
+        public function registerUser($email, $nickname, $password) {
+            $query = "INSERT INTO Users(email, nickname, password) VALUES ('$email', '$nickname', '$password')";
             $result = mysql_query($query);
             
             return true;
