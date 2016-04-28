@@ -18,6 +18,8 @@ public class CustomListAdapter extends BaseAdapter {
     ArrayList<Task> data;
     private static LayoutInflater inflater = null;
 
+
+
     public CustomListAdapter(Context context, ArrayList<Task> data) {
         // TODO Auto-generated constructor stub
         this.context = context;

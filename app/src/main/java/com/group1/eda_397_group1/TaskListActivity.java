@@ -5,20 +5,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class TaskList extends AppCompatActivity {
+public class TaskListActivity extends AppCompatActivity {
 
     //ListView
     private ListView taskListView;
+    private Button createTaskButton;
 
     private CustomListAdapter taskListAdapter;
+    private ArrayList<Task> taskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +26,10 @@ public class TaskList extends AppCompatActivity {
         setContentView(R.layout.activity_task_list);
 
         //Find the listView Resource
-        taskListView = (ListView) findViewById( R.id.taskList );
+        taskListView = (ListView) findViewById(R.id.taskList);
 
-        //Find the listElement recourses
-
+        //Find the "createTaskButton"
+        createTaskButton = (Button) findViewById(R.id.createTaskButton);
 
         //Create and populate the list of tasks
         //TODO: Add the tasks from the database in the list
@@ -37,24 +37,41 @@ public class TaskList extends AppCompatActivity {
                 new Task("JespersTask", 5, new User("emailJesper", "Jesper", "Karlberg"),new User("emailBerima", "Berima", "Andam"), new User("emailMusse", "Musse", "Hussein"))};
 
 
-        final ArrayList<Task> taskList = new ArrayList<>();
+        taskList = new ArrayList<>();
         taskList.addAll(Arrays.asList(tasks));
 
         //Create ArrayAdapter using the tasklist
-        taskListAdapter = new CustomListAdapter(this, taskList);
+        if(taskList != null) {
+            taskListAdapter = new CustomListAdapter(this, taskList);
+        }
 
-        taskListView.setAdapter(taskListAdapter);
-
+        if(taskListAdapter!=null) {
+            taskListView.setAdapter(taskListAdapter);
+        }
+        if(taskListAdapter!=null) {
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
                 //TODO: see if you can send a custom class through putexta. Maybe using "implements serializable" in the Task class?
-                Intent taskIntent = new Intent(TaskList.this, CreateTaskActivity.class);
+                Intent taskIntent = new Intent(TaskListActivity.this, CreateTaskActivity.class);
                 taskIntent.putExtra("task", taskList.get(position));
                 startActivity(taskIntent);
 
+            }
+        });
+        }
+
+        createTaskButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+
+                Intent activityChangeIntent = new Intent(TaskListActivity.this, CreateTaskActivity.class);
+
+                // currentContext.startActivity(activityChangeIntent);
+
+                TaskListActivity.this.startActivity(activityChangeIntent);
             }
         });
 
