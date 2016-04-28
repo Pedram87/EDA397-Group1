@@ -30,6 +30,12 @@ public class CreateTaskActivity extends AppCompatActivity {
 
     private CreatePairProgTask cppTask;
     private GetUserDataFromDatabase getUserDataFromDatabaseTask;
+    private ArrayList<User> users;
+    private List<String> usersString = new ArrayList<>();
+    Spinner user1Selector;
+    Spinner user2Selector;
+    ArrayAdapter<String> dataAdapter;
+    ArrayAdapter<String> dataAdapter2;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -47,26 +53,20 @@ public class CreateTaskActivity extends AppCompatActivity {
         final NumberPicker durationHour = (NumberPicker) findViewById(R.id.durationPickerHour);
         final NumberPicker durationMinute = (NumberPicker) findViewById(R.id.durationPickerMinute);
         Button createTaskButton = (Button) findViewById(R.id.createTaskButton);
-        Spinner user1Selector = (Spinner) findViewById(R.id.user1);
-        Spinner user2Selector = (Spinner) findViewById(R.id.user2);
+        user1Selector = (Spinner) findViewById(R.id.user1);
+        user2Selector = (Spinner) findViewById(R.id.user2);
 
+        // Tasks and Users
         getUserDataFromDatabaseTask = new GetUserDataFromDatabase();
-        ArrayList<User> users = null;
         getUserDataFromDatabaseTask.execute((Void)null);
-        users = DatabaseDummy.getInstance().getUsers();//getUserDataFromDatabaseTask.getUsers();
-
-        List<String> usersString = new ArrayList<>();
-
-        for(User u: users){
-            usersString.add(u.getFirstName() + " " + u.getLastName());
-        }
 
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+
+        dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, usersString);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
+        dataAdapter2 = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, usersString);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -144,8 +144,8 @@ public class CreateTaskActivity extends AppCompatActivity {
 
 
         public GetUserDataFromDatabase() {
-            database = DatabaseDummy.getInstance();
-            users = null;
+            //database = DatabaseDummy.getInstance();
+            //users = null;
         }
 
         @Override
@@ -156,10 +156,10 @@ public class CreateTaskActivity extends AppCompatActivity {
 //            String result = null;
             try {
 
-                users = database.getUsers();
+                users = database.getInstance().getUsers();
 
             } catch (Exception e) {
-
+                Log.e("GetUsersFromDb:", e.toString());
             }
 
             return users;
@@ -167,7 +167,16 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(final ArrayList<User> us) {
-            users = us;
+            users = getUserDataFromDatabaseTask.getUsers(); // DatabaseDummy.getInstance().getUsers();//
+
+
+            for(User u: users){
+                usersString.add(u.getFirstName() + " " + u.getLastName());
+            }
+
+            dataAdapter.notifyDataSetChanged();
+            dataAdapter2.notifyDataSetChanged();
+            //user2Selector.refreshDrawableState();
         }
 
         @Override
