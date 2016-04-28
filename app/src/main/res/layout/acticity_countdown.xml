@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.group1.eda_397_group1.Countdown"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/countdown_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zero"
+            android:id="@+id/timeView"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="134dp"
+            android:onClick="setTime"
+            android:minHeight="25dp"
+            android:minWidth="55dp"
+            android:textSize="75sp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/startCount"
+            android:id="@+id/startCount"
+            android:layout_marginTop="86dp"
+            android:onClick="startCount"
+            android:layout_below="@+id/timeView"
+            android:layout_alignParentLeft="true"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stopCount"
+            android:id="@+id/stopCount"
+            android:onClick="stopCount"
+            android:layout_alignTop="@+id/startCount"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
