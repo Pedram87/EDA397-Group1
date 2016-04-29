@@ -24,6 +24,10 @@ public class DatabaseDummy {
         return  instance;
     }
 
+    public DatabaseDummy(){
+
+    }
+
     private static ArrayList<Task> populateTask(){
         ArrayList<Task> taskList = new ArrayList<>();
 
