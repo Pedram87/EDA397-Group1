@@ -57,7 +57,7 @@ public class TaskListActivity extends AppCompatActivity {
                 //TODO: see if you can send a custom class through putexta. Maybe using "implements serializable" in the Task class?
                 //TODO: See what we have to send here to get the info in the database
                 Intent taskIntent = new Intent(TaskListActivity.this, CreateTaskActivity.class);
-                taskIntent.putExtra("task", taskList.get(position).getName());
+                taskIntent.putExtra("taskName", taskList.get(position).getName());
                 startActivity(taskIntent);
 
             }
