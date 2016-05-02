@@ -43,7 +43,7 @@
         </activity>
         <activity
             android:name=".Countdown"
-            android:label="Countdown"
+            android:label="@string/CountdownActivity"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

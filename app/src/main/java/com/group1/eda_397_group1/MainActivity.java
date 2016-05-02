@@ -14,6 +14,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(View view) {
         Intent intent = new Intent(this, SecondActivity.class);
+        /* to test the Countdown class, also comment the redirecting to login/register + fab.setOnClickListener block
+        Intent intent = new Intent(this, Countdown.class);
+         */
         startActivity(intent);
     }
 
