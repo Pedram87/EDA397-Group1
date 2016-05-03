@@ -1,5 +1,7 @@
 package com.group1.eda_397_group1;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -20,16 +22,19 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateTaskActivity extends AppCompatActivity {
+public class CreateTaskActivity extends AppCompatActivity implements AsyncResponse{
 
-    private CreatePairProgTask cppTask;
+  //  private CreatePairProgTask cppTask;
     private GetUserDataFromDatabase getUserDataFromDatabaseTask;
+    private  DatabaseHandler databaseHandler;
+    private JSONParser parser = new JSONParser();
     private ArrayList<User> users;
     private List<String> usersString = new ArrayList<>();
     Spinner user1Selector;
@@ -60,6 +65,9 @@ public class CreateTaskActivity extends AppCompatActivity {
         getUserDataFromDatabaseTask = new GetUserDataFromDatabase();
         getUserDataFromDatabaseTask.execute((Void)null);
 
+        // Get from online database
+
+
 
 
         dataAdapter = new ArrayAdapter<String>(this,
@@ -77,12 +85,21 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         createTaskButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Task task = new Task(taskName.getText().toString(), ((durationHour.getValue() * 60) + durationMinute.getValue()), new User("", "", ""), new User("", "", ""), new User("", "", ""));
 
-                cppTask = new CreatePairProgTask(task);
-                cppTask.execute((Void) null);
+                //TODO create validation methods for the task
+                Task task = new Task(taskName.getText().toString(), ((durationHour.getValue() * 60) + durationMinute.getValue()), "a@b.c", "aa", "aass");
+
+              /*  cppTask = new CreatePairProgTask(task);
+                cppTask.execute((Void) null); */
+
+                createTaskInRemoteDB(task, new User("jimmy@b.c", "jimmy", "elsa"));
+
+
             }
         });
+
+
+
 
 
         durationHour.setMaxValue(10);
@@ -95,6 +112,12 @@ public class CreateTaskActivity extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    public void createTaskInRemoteDB(Task task, User user){
+        databaseHandler = new DatabaseHandler(parser.getCreateTaskInJSON(task, user));
+        databaseHandler.delegate = this;
+        databaseHandler.execute();
     }
 
     @Override
@@ -135,6 +158,28 @@ public class CreateTaskActivity extends AppCompatActivity {
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
+    }
+
+
+    @Override
+    public void processFinish(JSONObject json) throws JSONException {
+        if (json.get("success").equals(1)) {
+            Log.d("Create task activity", "task created successfully");
+
+            // Go to another activity and store user
+        } else {
+            Log.e("LoginActivity", "login error");
+            new AlertDialog.Builder(CreateTaskActivity.this)
+                    .setTitle("Create Task failure")
+                    .setMessage(json.get("error_msg").toString())
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing here
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 
 
@@ -191,6 +236,8 @@ public class CreateTaskActivity extends AppCompatActivity {
     }
 
 
+
+    // TODO Remove this class laster
     public class CreatePairProgTask extends AsyncTask<Void, Void, Boolean> {
 
         private Task task;
@@ -218,12 +265,12 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            cppTask = null;
+            //cppTask = null;
         }
 
         @Override
         protected void onCancelled() {
-            cppTask = null;
+            //cppTask = null;
             // showProgress(false);
         }
     }

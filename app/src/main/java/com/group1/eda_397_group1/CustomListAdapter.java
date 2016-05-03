@@ -56,16 +56,16 @@ public class CustomListAdapter extends BaseAdapter {
         taskName.setText(data.get(position).getName());
 
         TextView taskOwner = (TextView) vi.findViewById(R.id.taskOwner);
-        taskOwner.setText(data.get(position).getOwner().getFirstName() + " " + data.get(position).getOwner().getLastName());
+        taskOwner.setText(data.get(position).getOwnerID());
 
         TextView taskDuration = (TextView) vi.findViewById(R.id.taskDuration);
         taskDuration.setText(data.get(position).getDuration() + "");
 
         TextView taskMember1 = (TextView) vi.findViewById(R.id.taskMember1);
-        taskMember1.setText(data.get(position).getPairprogramer1().getFirstName() + " " + data.get(position).getPairprogramer1().getLastName() + ",");
+        taskMember1.setText(data.get(position).getPairprogramer1ID());
 
         TextView taskMember2 = (TextView) vi.findViewById(R.id.taskMember2);
-        taskMember2.setText(data.get(position).getPairprogramer2().getFirstName() + " " + data.get(position).getPairprogramer2().getLastName());
+        taskMember2.setText(data.get(position).getPairprogramer2D());
         return vi;
     }
 }

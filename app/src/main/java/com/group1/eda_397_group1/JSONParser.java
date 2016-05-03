@@ -46,6 +46,34 @@ public class JSONParser {
         return createTaskJSON;
     }
 
+    public JSONObject getGetTasksInJSON(User currentUser){
+        JSONObject readTaskJSON = new JSONObject();
+
+        try{
+            readTaskJSON.put("tag", "get_tasks");
+            readTaskJSON.put("current_user", currentUser.getEmail());
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        return readTaskJSON;
+    }
+
+    public JSONObject getGetTaskInJSON(Task selectedTask){
+        JSONObject readTaskJSON = new JSONObject();
+
+        try{
+            readTaskJSON.put("tag", "get_task");
+            readTaskJSON.put("task_id", selectedTask.getId());
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        return readTaskJSON;
+    }
+
     public JSONObject getUpdateTaskInJSON(Task task, User currentUser){
         JSONObject updateTaskJSON = new JSONObject();
 
@@ -64,5 +92,20 @@ public class JSONParser {
         }
 
         return updateTaskJSON;
+    }
+
+    public JSONObject getDeleteTaskInJSON(Task task, User currentUser){
+        JSONObject deleteTaskJSON = new JSONObject();
+
+
+        try{
+            deleteTaskJSON.put("tag", "delete_task");
+            deleteTaskJSON.put("task_id", task.getId());
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        return deleteTaskJSON;
     }
 }

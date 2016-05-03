@@ -36,8 +36,8 @@ public class TaskListActivity extends AppCompatActivity {
 
         //Create and populate the list of tasks
         //TODO: Add the tasks from the database in the list
-        Task[] tasks = new Task[]{new Task("JespersTask", 5, new User("emailJesper", "Jesper", "Karlberg"),new User("emailBerima", "Berima", "Andam"), new User("emailMusse", "Musse", "Hussein")),
-                new Task("JespersTask", 5, new User("emailJesper", "Jesper", "Karlberg"),new User("emailBerima", "Berima", "Andam"), new User("emailMusse", "Musse", "Hussein"))};
+        Task[] tasks = new Task[]{new Task("JespersTask", 5, "emailJesper", "emailBerima", "emailMusse"),
+                new Task("JespersTask", 5, "emailJesper" ,"emailBerima", "emailMusse")};
 
 
         taskList = new ArrayList<>();

@@ -15,12 +15,12 @@ public class Task implements Serializable {
     private String pairprogramer2IdD;
 
 
-    Task(String name, int duration, User owner, User pairProgramer1, User pairProgramer2){
+    Task(String name, int duration, String ownerID, String pairprogramer1ID, String pairProgramer2ID){
         this.setName(name);
         this.setDuration(duration);
         this.setOwnerID(ownerID);
         this.setPairprogramer1ID(pairprogramer1ID);
-        this.setPairprogramer2(pairprogramer2IdD);
+        this.setPairprogramer2(pairProgramer2ID);
     }
 
     public String getName() {
