@@ -55,7 +55,6 @@
                     $response["error"]                  = 1;
                     $response["error_msg"]              = "Could not find \"".$email."\"";
                 }
-                echo json_encode($response);
             } else if ($tag == "register") {
                 // Register user
                 $userExists = $db->isUserExisting($email);
@@ -76,7 +75,6 @@
                     $response["error"]                  = 1;
                     $response["error_msg"]              = "Error, email already exists";
                 }
-                echo json_encode($response);
             } else if ($tag == "getAllUsers") {
                 $users = $db->getAllUsers();
 
@@ -91,7 +89,6 @@
                     $response["error"]                  = 1;
                     $response["error_msg"]              = "Error finding users";
                 }
-                echo json_encode($response);
             } else if ($tag == "createTask") {
                 $task = $db->createTask($task_name, $task_duration, $task_owner, $task_PairProgrammer1ID, $task_PairProgrammer2ID);
 
@@ -101,7 +98,6 @@
                     $response["error"]                  = 1;
                     $response["error_msg"]              = "Error, could not create task";
                 }
-                echo json_encode($response);
             } else if ($tag == "deleteTask") {
                 $task = $db->deleteTask($task_id);
 
@@ -111,7 +107,6 @@
                     $response["error"]                  = 1;
                     $response["error_msg"]              = "Error, could not delete task";
                 }
-                echo json_encode($response);
             } else if ($tag == "getTasks") {
                 $tasks = $db->getTasks();
 
@@ -125,14 +120,12 @@
                     $response["error"]                  = 1;
                     $response["error_msg"]              = "Error, could not get tasks";
                 }
-                echo json_encode($response);
-
             } else {
                 // Error in tag
                 $response["error"]                      = 1;
                 $response["error_msg"]                  = "Error, invalid action tag";
-                echo json_encode($response);
             }
+            echo json_encode($response);
         } else {
             echo "Access denied!";
         }
