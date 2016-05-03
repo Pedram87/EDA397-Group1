@@ -11,10 +11,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class TaskListActivity extends AppCompatActivity {
+public class TaskListActivity extends AppCompatActivity implements AsyncResponse {
 
     //ListView
     private ListView taskListView;
@@ -37,11 +41,22 @@ public class TaskListActivity extends AppCompatActivity {
         //Find the "createTaskButton"
         createTaskButton = (Button) findViewById(R.id.createTaskButton);
 
-        //dbHandler = new DatabaseHandler(parser.getGetTasksInJSON())
+        dbHandler = new DatabaseHandler(parser.getGetTasksInJSON("2@2.com"));
+        dbHandler.delegate = this;
+        dbHandler.execute();
+
+        //Create ArrayAdapter using the tasklist
+        if(taskList != null) {
+            taskListAdapter = new CustomListAdapter(this, taskList);
+        }
+
+        if(taskListAdapter!=null) {
+            taskListView.setAdapter(taskListAdapter);
+        }
 
         //Create and populate the list of tasks
         //TODO: Add the tasks from the database in the list
-        Task[] tasks = new Task[]{new Task("JespersTask", 5, "emailJesper", "emailBerima", "emailMusse"),
+        /*Task[] tasks = new Task[]{new Task("JespersTask", 5, "emailJesper", "emailBerima", "emailMusse"),
                 new Task("JespersTask", 5, "emailJesper" ,"emailBerima", "emailMusse")};
 
 
@@ -55,8 +70,8 @@ public class TaskListActivity extends AppCompatActivity {
 
         if(taskListAdapter!=null) {
             taskListView.setAdapter(taskListAdapter);
-        }
-        if(taskListAdapter!=null) {
+        }*/
+
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -109,7 +124,7 @@ public class TaskListActivity extends AppCompatActivity {
             });
 
 
-        }
+
 
         createTaskButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -123,5 +138,52 @@ public class TaskListActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void processFinish(JSONObject json) throws JSONException {
+        if (json.get("success").equals(1)) {
+            Log.d("Create task activity", "task created successfully");
+
+            /*Task[] tasks = new Task[]{new Task("JespersTask", 5, "emailJesper", "emailBerima", "emailMusse"),
+                    new Task("JespersTask", 5, "emailJesper" ,"emailBerima", "emailMusse")};*/
+
+
+            taskList = new ArrayList<>();
+            JSONArray jsonArray = json.getJSONArray("tasks");
+
+
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject taskObject = (JSONObject) jsonArray.get(i);
+                String taskName = taskObject.getString("name");
+                String id = taskObject.getString("task_id");
+                int duration = taskObject.getInt("total_time");
+                String ownerID = taskObject.getString("owner");
+                //TODO Add pair pgorrammers in db json shit
+                String pairProg1 =  taskObject.getString("asdfasdf");
+                String pairProg2 =  taskObject.getString("asdfasdfsa");
+                taskList.add(new Task(taskName, duration, ownerID, pairProg1, pairProg2));
+            }
+
+            taskListAdapter.notifyDataSetChanged();
+
+            //taskList.addAll(Arrays.asList(tasks));
+
+
+
+            // Go to another activity and store user
+        } else {
+            Log.e("LoginActivity", "login error");
+            new AlertDialog.Builder(TaskListActivity.this)
+                    .setTitle("Create Task failure")
+                    .setMessage(json.get("error_msg").toString())
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing here
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 }
