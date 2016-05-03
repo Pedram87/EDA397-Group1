@@ -46,12 +46,12 @@ public class JSONParser {
         return createTaskJSON;
     }
 
-    public JSONObject getGetTasksInJSON(User currentUser){
+    public JSONObject getGetTasksInJSON(String currentUserEmail){
         JSONObject readTaskJSON = new JSONObject();
 
         try{
             readTaskJSON.put("tag", "get_tasks");
-            readTaskJSON.put("current_user", currentUser.getEmail());
+            readTaskJSON.put("current_user", currentUserEmail);
 
         }catch (JSONException e){
             e.printStackTrace();

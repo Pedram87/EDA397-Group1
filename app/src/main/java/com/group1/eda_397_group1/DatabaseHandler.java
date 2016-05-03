@@ -66,7 +66,7 @@ public class DatabaseHandler extends AsyncTask<Void, Void, JSONObject> {
 
             try {
                 jsonReturnObject = new JSONObject(resultString);
-                //Log.d("DatabaseHandler", resultString);
+                Log.d("DatabaseHandler", resultString);
             } catch (Throwable t) {
                 Log.e("DatabaseHandler", "Could not parse malformed JSON: \"" + resultString + "\"");
             }

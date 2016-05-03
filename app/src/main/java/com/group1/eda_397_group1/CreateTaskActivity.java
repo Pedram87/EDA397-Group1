@@ -87,12 +87,14 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
             public void onClick(View v) {
 
                 //TODO create validation methods for the task
-                Task task = new Task(taskName.getText().toString(), ((durationHour.getValue() * 60) + durationMinute.getValue()), "a@b.c", "aa", "aass");
+                Task task = new Task(taskName.getText().toString(), ((durationHour.getValue() * 60) + durationMinute.getValue()), "1@1.com", "2@2.com", "3@3.com");
 
               /*  cppTask = new CreatePairProgTask(task);
                 cppTask.execute((Void) null); */
 
-                createTaskInRemoteDB(task, new User("jimmy@b.c", "jimmy", "elsa"));
+                Log.e(" Create TAsk Activity" , task.toString());
+
+                createTaskInRemoteDB(task, new User("2@2.com", "jimmy", "elsa"));
 
 
             }
