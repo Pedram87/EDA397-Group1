@@ -32,7 +32,6 @@ public class JSONParser {
 
         try{
             createTaskJSON.put("tag", "create_task");
-            createTaskJSON.put("current_user", currentUser.getEmail());
             createTaskJSON.put("task_name", task.getName());
             createTaskJSON.put("task_duration", task.getDuration());
             createTaskJSON.put("task_id", task.getId());
@@ -45,5 +44,25 @@ public class JSONParser {
         }
 
         return createTaskJSON;
+    }
+
+    public JSONObject getUpdateTaskInJSON(Task task, User currentUser){
+        JSONObject updateTaskJSON = new JSONObject();
+
+
+        try{
+            updateTaskJSON.put("tag", "update_task");
+            updateTaskJSON.put("task_name", task.getName());
+            updateTaskJSON.put("task_duration", task.getDuration());
+            updateTaskJSON.put("task_id", task.getId());
+            updateTaskJSON.put("task_owner", task.getOwnerID());
+            updateTaskJSON.put("task_PairProgrammer1ID", task.getPairprogramer1ID());
+            updateTaskJSON.put("task_PairProgrammer2ID", task.getPairprogramer2D());
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        return updateTaskJSON;
     }
 }
