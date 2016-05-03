@@ -26,16 +26,17 @@
         android:id="@+id/infoTextView"
         android:text="Clicka and hold a task to delete it"
         android:layout_width="130dp"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:lines="2"
         android:maxLines="2"
-        android:layout_gravity="left"/>
+        android:layout_gravity="left"
+        android:gravity="center_vertical" />
 
     <Button
         android:id="@+id/createTaskButton"
         android:text="Create new task"
-        android:layout_width="130dp"
-        android:layout_height="50dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     </LinearLayout>
 
