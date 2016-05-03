@@ -7,59 +7,68 @@ import java.io.Serializable;
  */
 public class Task implements Serializable {
 
+    private String id;
     private String name;
     private int duration;
-    private User owner;
-    private User pairprogramer1;
-    private User pairprogramer2;
+    private String ownerID;
+    private String pairprogramer1ID;
+    private String pairprogramer2IdD;
 
 
     Task(String name, int duration, User owner, User pairProgramer1, User pairProgramer2){
         this.setName(name);
         this.setDuration(duration);
-        this.setOwner(owner);
-        this.setPairprogramer1(pairProgramer1);
-        this.setPairprogramer2(pairProgramer2);
+        this.setOwnerID(ownerID);
+        this.setPairprogramer1ID(pairprogramer1ID);
+        this.setPairprogramer2(pairprogramer2IdD);
     }
 
     public String getName() {
+
         return name;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 
     public int getDuration() {
+
         return duration;
     }
 
     public void setDuration(int duration) {
+
         this.duration = duration;
     }
 
-    public User getOwner() {
-        return owner;
+    public String getOwnerID() {
+
+        return ownerID;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setOwnerID(String ownerID) {
+
+        this.ownerID = ownerID;
     }
 
-    public User getPairprogramer1() {
-        return pairprogramer1;
+    public String getPairprogramer1ID() {
+
+        return pairprogramer1ID;
     }
 
-    public void setPairprogramer1(User pairprogramer1) {
-        this.pairprogramer1 = pairprogramer1;
+    public void setPairprogramer1ID(String pairprogramer1ID) {
+        this.pairprogramer1ID = pairprogramer1ID;
     }
 
-    public User getPairprogramer2() {
-        return pairprogramer2;
+    public String getPairprogramer2D() {
+
+        return pairprogramer2IdD;
     }
 
-    public void setPairprogramer2(User pairprogramer2) {
-        this.pairprogramer2 = pairprogramer2;
+    public void setPairprogramer2(String pairprogramer2) {
+        this.pairprogramer2IdD = pairprogramer2;
     }
 
     @Override
@@ -67,9 +76,17 @@ public class Task implements Serializable {
         return "Task[" +
                 "name='" + name + '\'' +
                 ", duration=" + duration +
-                ", owner=" + owner +
-                ", pairprogramer1=" + pairprogramer1 +
-                ", pairprogramer2=" + pairprogramer2 +
+                ", owner=" + ownerID +
+                ", pairprogramer1=" + pairprogramer1ID +
+                ", pairprogramer2=" + pairprogramer2IdD +
                 ']';
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

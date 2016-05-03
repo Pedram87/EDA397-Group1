@@ -25,4 +25,25 @@ public class JSONParser {
         Log.e("JSONParser.getLoginJSON", json.toString());
         return json;
     }
+
+    public JSONObject getCreateTaskInJSON(Task task, User currentUser){
+        JSONObject createTaskJSON = new JSONObject();
+
+
+        try{
+            createTaskJSON.put("tag", "create_task");
+            createTaskJSON.put("current_user", currentUser.getEmail());
+            createTaskJSON.put("task_name", task.getName());
+            createTaskJSON.put("task_duration", task.getDuration());
+            createTaskJSON.put("task_id", task.getId());
+            createTaskJSON.put("task_owner", task.getOwnerID());
+            createTaskJSON.put("task_PairProgrammer1ID", task.getPairprogramer1ID());
+            createTaskJSON.put("task_PairProgrammer2ID", task.getPairprogramer2D());
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        return createTaskJSON;
+    }
 }
