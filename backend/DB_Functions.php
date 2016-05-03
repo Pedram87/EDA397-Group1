@@ -113,7 +113,7 @@
             return $result;
         }
 
-        public function getTasks() {
+        public function getAllTasks() {
             $query = "SELECT * FROM Tasks";
             $result = mysql_query($query) or die(mysql_error());
             $array = array();
@@ -122,6 +122,34 @@
             while ($temp = mysql_fetch_array($result, MYSQL_ASSOC)) {
                 // Add every user to array
                 array_push($array, $temp);
+            }
+            return ($array);
+        }
+
+        public function getTask($task_id) {
+            // Prevent injection
+            $task_id = mysql_real_escape_string($task_id);
+
+            $query = "SELECT * FROM Tasks WHERE task_id = '$task_id'";
+            $result = mysql_query($query) or die(mysql_error());
+            return mysql_fetch_assoc($result);
+        }
+
+        public function getTasksAssignedToUser($current_user) {
+            // Prevent injection
+            $current_user = mysql_real_escape_string($current_user);
+
+            $query = "SELECT t.task_id, a.email, t.name, t.total_time, t.owner
+                      FROM TaskAssign a
+                      INNER JOIN Tasks t ON a.task_id = t.task_id
+                      WHERE a.email = '$current_user'";
+
+            $result = mysql_query($query) or die(mysql_error());
+            $array = array();
+
+            // Check for result
+            while ($temp = mysql_fetch_array($result, MYSQL_ASSOC)) {
+              array_push($array, $temp);
             }
             return ($array);
         }
