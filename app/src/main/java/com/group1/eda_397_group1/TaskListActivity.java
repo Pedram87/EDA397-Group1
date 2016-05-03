@@ -1,8 +1,11 @@
 package com.group1.eda_397_group1;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -62,6 +65,45 @@ public class TaskListActivity extends AppCompatActivity {
 
             }
         });
+
+            taskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                               int pos, long id) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(TaskListActivity.this);
+
+                    builder.setTitle("Delete task");
+                    builder.setMessage("Are you sure you want to delete this task?");
+
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            Log.d("", "Yes clicked");
+                            //TODO Deleta task from database
+                            dialog.dismiss();
+                        }
+
+                    });
+
+                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Log.d("", "No clicked");
+                            //TODO Nothing should be here
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
+                    return true;
+                }
+            });
+
+
         }
 
         createTaskButton.setOnClickListener(new View.OnClickListener() {
