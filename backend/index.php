@@ -112,6 +112,21 @@
                     $response["error_msg"]              = "Error, could not delete task";
                 }
                 echo json_encode($response);
+            } else if ($tag == "getTasks") {
+                $tasks = $db->getTasks();
+
+                if ($tasks) {
+                    $response["success"]                = 1;
+
+                    foreach($tasks as $key => $value) {
+                        $response["task"][$key] = $value;
+                    }
+                } else {
+                    $response["error"]                  = 1;
+                    $response["error_msg"]              = "Error, could not get tasks";
+                }
+                echo json_encode($response);
+
             } else {
                 // Error in tag
                 $response["error"]                      = 1;

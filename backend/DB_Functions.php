@@ -112,5 +112,18 @@
             $result = mysql_query($query) or die(mysql_error());
             return $result;
         }
+
+        public function getTasks() {
+            $query = "SELECT * FROM Tasks";
+            $result = mysql_query($query) or die(mysql_error());
+            $array = array();
+            
+            // Check for result 
+            while ($temp = mysql_fetch_array($result, MYSQL_ASSOC)) {
+                // Add every user to array
+                array_push($array, $temp);
+            }
+            return ($array);
+        }
     }
 ?>
