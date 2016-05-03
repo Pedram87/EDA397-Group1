@@ -103,5 +103,14 @@
 
             return $result1 AND $result2 AND $result3;
         }
+
+        public function deleteTask($task_id) {
+            // Prevent injection
+            $task_id = mysql_real_escape_string($task_id);
+
+            $query = "DELETE FROM Tasks WHERE task_id = '$task_id'";
+            $result = mysql_query($query) or die(mysql_error());
+            return $result;
+        }
     }
 ?>

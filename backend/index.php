@@ -25,6 +25,7 @@
             $email                  = $array["email"];
             $name                   = $array["name"];
             $password               = $array["password"];
+            $task_id                = $array["task_id"];
             $task_name              = $array["task_name"];
             $task_duration          = $array["task_duration"];
             $task_owner             = $array["task_owner"];
@@ -95,10 +96,20 @@
                 $task = $db->createTask($task_name, $task_duration, $task_owner, $task_PairProgrammer1ID, $task_PairProgrammer2ID);
 
                 if ($task) {
-                    $response["success"]                = 1;               
+                    $response["success"]                = 1;
                 } else {
                     $response["error"]                  = 1;
                     $response["error_msg"]              = "Error, could not create task";
+                }
+                echo json_encode($response);
+            } else if ($tag == "deleteTask") {
+                $task = $db->deleteTask($task_id);
+
+                if ($task) {
+                    $response["success"]                = 1;
+                } else {
+                    $response["error"]                  = 1;
+                    $response["error_msg"]              = "Error, could not delete task";
                 }
                 echo json_encode($response);
             } else {
