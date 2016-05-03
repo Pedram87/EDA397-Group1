@@ -1,6 +1,6 @@
 <?php
     header('Access-Control-Allow-Origin: *');
-    header('Access-Control-Allow-Methods: POST,GET,OPTIONS');
+    header('Access-Control-Allow-Methods: POST');
     header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
     header('Content-type: text/html; charset=utf8mb4');
     mysql_set_charset('utf8mb4');
@@ -22,9 +22,14 @@
 
         // Check if tag exists
         if ($tag && $tag != "") {
-            $email              = $array["email"];
-            $nickname           = $array["nickname"];
-            $password           = $array["password"];
+            $email                  = $array["email"];
+            $name                   = $array["name"];
+            $password               = $array["password"];
+            $task_name              = $array["task_name"];
+            $task_duration          = $array["task_duration"];
+            $task_owner             = $array["task_owner"];
+            $task_PairProgrammer1ID = $array["task_PairProgrammer1ID"];
+            $task_PairProgrammer2ID = $array["task_PairProgrammer2ID"];
 
             // Set response JSON to default values
             $response = array("tag" => $tag, "success" => 0, "error" => 0);
@@ -69,6 +74,31 @@
                 } else {
                     $response["error"]                  = 1;
                     $response["error_msg"]              = "Error, email already exists";
+                }
+                echo json_encode($response);
+            } else if ($tag == "getAllUsers") {
+                $users = $db->getAllUsers();
+
+                if ($users) {
+                    $response["success"]                = 1;
+                    // Loop through all users...
+                    foreach($users as $key => $value) {
+                        // ...and insert to JSON response string
+                        $response["user"][$key] = $value;
+                    }                    
+                } else {
+                    $response["error"]                  = 1;
+                    $response["error_msg"]              = "Error finding users";
+                }
+                echo json_encode($response);
+            } else if ($tag == "createTask") {
+                $task = $db->createTask($task_name, $task_duration, $task_owner, $task_PairProgrammer1ID, $task_PairProgrammer2ID);
+
+                if ($task) {
+                    $response["success"]                = 1;               
+                } else {
+                    $response["error"]                  = 1;
+                    $response["error_msg"]              = "Error, could not create task";
                 }
                 echo json_encode($response);
             } else {
