@@ -23,6 +23,9 @@ public class TaskListActivity extends AppCompatActivity {
     private CustomListAdapter taskListAdapter;
     private ArrayList<Task> taskList;
 
+    private DatabaseHandler dbHandler;
+    private JSONParser parser = new JSONParser();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,8 @@ public class TaskListActivity extends AppCompatActivity {
 
         //Find the "createTaskButton"
         createTaskButton = (Button) findViewById(R.id.createTaskButton);
+
+        //dbHandler = new DatabaseHandler(parser.getGetTasksInJSON())
 
         //Create and populate the list of tasks
         //TODO: Add the tasks from the database in the list

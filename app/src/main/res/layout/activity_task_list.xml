@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".TaskList_unused">
+    tools:context=".TaskListActivity">
 
     <ListView
         android:layout_width="match_parent"
@@ -18,13 +18,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:orientation="horizontal"
-        android:layout_below="@+id/taskList">
+        android:layout_alignParentBottom="true">
 
     <TextView
         android:id="@+id/infoTextView"
-        android:text="Clicka and hold a task to delete it"
+        android:text="@string/lastListDeleteInfo"
         android:layout_width="130dp"
         android:layout_height="match_parent"
         android:lines="2"

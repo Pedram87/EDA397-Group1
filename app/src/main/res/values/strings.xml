@@ -19,4 +19,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Strings related to taskListActivity -->
+    <string name="lastListDeleteInfo">Click and hold a\n\ task to delete it</string>
 </resources>
