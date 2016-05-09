@@ -25,4 +25,18 @@ public class JSONParser {
         Log.e("JSONParser.getLoginJSON", json.toString());
         return json;
     }
+
+    public JSONObject insertUserJSON(String email, String username, String password) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("tag", "register");
+            json.put("email", email);
+            json.put("name", username);
+            json.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("JSONParser.registerJSON", json.toString());
+        return json;
+    }
 }
