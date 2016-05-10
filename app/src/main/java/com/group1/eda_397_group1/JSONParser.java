@@ -143,5 +143,19 @@ public class JSONParser {
         }
 
         return readTaskJSON;
+
+    public JSONObject getRegisterJSON(String email, String name, String password) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("tag", "register");
+            json.put("email", email);
+            json.put("name", name);
+            json.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("JSONParser.registerJSON", json.toString());
+        return json;
+
     }
 }

@@ -12,6 +12,8 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
+    private UserSingleton user;
+
     public void sendMessage(View view) {
         Intent intent = new Intent(this, TaskListActivity.class);
         startActivity(intent);
@@ -27,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
         //redirecting to login/register
         Intent intent = new Intent(this, CreateTaskActivity.class);
         startActivity(intent);
+
+        user = UserSingleton.getInstance();
+//        //redirecting to login/register
+        if(user == null || user.getEmail() == null || user.getEmail().equals("")) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
