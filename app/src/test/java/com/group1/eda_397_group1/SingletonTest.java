@@ -11,10 +11,15 @@ import static org.junit.Assert.assertNotEquals;
 public class SingletonTest {
 
     @Test
-    public void singleton_works_correctly() throws NullPointerException {
+    public void singleton_creation_worksCorrect() throws NullPointerException, Exception {
         UserSingleton user = UserSingleton.getInstance();
         assertNotEquals(null, user);
         assertEquals(null, user.getEmail());
+    }
+
+    @Test
+    public void singleton_setEmail_worksCorrect() throws Exception {
+        UserSingleton user = UserSingleton.getInstance();
         user.setEmail("testuser@testdomain.com");
         assertEquals("testuser@testdomain.com", user.getEmail());
     }
