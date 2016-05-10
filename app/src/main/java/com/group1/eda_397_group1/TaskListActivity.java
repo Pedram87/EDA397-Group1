@@ -45,14 +45,7 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
         dbHandler.delegate = this;
         dbHandler.execute();
 
-        //Create ArrayAdapter using the tasklist
-        if(taskList != null) {
-            taskListAdapter = new CustomListAdapter(this, taskList);
-        }
 
-        if(taskListAdapter!=null) {
-            taskListView.setAdapter(taskListAdapter);
-        }
 
         //Create and populate the list of tasks
         //TODO: Add the tasks from the database in the list
@@ -90,7 +83,7 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
                 @Override
                 public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                                int pos, long id) {
-
+                    final int positionInner = pos;
                     AlertDialog.Builder builder = new AlertDialog.Builder(TaskListActivity.this);
 
                     builder.setTitle("Delete task");
@@ -98,9 +91,16 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
 
                     builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
+
+
                         public void onClick(DialogInterface dialog, int which) {
                             Log.d("", "Yes clicked");
-                            //TODO Deleta task from database
+                            //TODO:
+                            Task task = taskList.get(positionInner);
+                            /*JSONObject objectToDelete = parser.getDeleteTaskInJSON(task, );
+                            objectToDelete.
+
+                            taskListAdapter.notifyDataSetChanged();*/
                             dialog.dismiss();
                         }
 
@@ -111,7 +111,6 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Log.d("", "No clicked");
-                            //TODO Nothing should be here
                             dialog.dismiss();
                         }
                     });
@@ -145,11 +144,11 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
         if (json.get("success").equals(1)) {
             Log.d("Create task activity", "task created successfully");
 
-            /*Task[] tasks = new Task[]{new Task("JespersTask", 5, "emailJesper", "emailBerima", "emailMusse"),
-                    new Task("JespersTask", 5, "emailJesper" ,"emailBerima", "emailMusse")};*/
+            //Task[] tasks = new Task[]{new Task("JespersTask", 5, "emailJesper", "emailBerima", "emailMusse"),
+                    //new Task("JespersTask", 5, "emailJesper" ,"emailBerima", "emailMusse")};
 
 
-            taskList = new ArrayList<>();
+            taskList = new ArrayList<Task>();
             JSONArray jsonArray = json.getJSONArray("tasks");
 
 
@@ -159,16 +158,30 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
                 String id = taskObject.getString("task_id");
                 int duration = taskObject.getInt("total_time");
                 String ownerID = taskObject.getString("owner");
-                //TODO Add pair pgorrammers in db json shit
-                String pairProg1 =  taskObject.getString("asdfasdf");
-                String pairProg2 =  taskObject.getString("asdfasdfsa");
-                taskList.add(new Task(taskName, duration, ownerID, pairProg1, pairProg2));
-            }
+                //TODO Add pair pgorrammers in db json
+                String pairProg1 =  taskObject.getString("pairProgrammer1");
+                String pairProg2 = "";
+                if(taskObject.getString("pairProgrammer2")!=null){
+                    pairProg2 =  taskObject.getString("pairProgrammer2");
+                }
+                else{
+                    pairProg2 = "No other user assigned";
+                }
 
-            taskListAdapter.notifyDataSetChanged();
+                taskList.add(new Task(id, taskName, duration, ownerID, pairProg1, pairProg2));
+
+            }
 
             //taskList.addAll(Arrays.asList(tasks));
 
+            //Create ArrayAdapter using the tasklist
+            if(taskList != null) {
+                taskListAdapter = new CustomListAdapter(this, taskList);
+            }
+
+            if(taskListAdapter!=null) {
+                taskListView.setAdapter(taskListAdapter);
+            }
 
 
             // Go to another activity and store user

@@ -15,7 +15,8 @@ public class Task implements Serializable {
     private String pairprogramer2IdD;
 
 
-    Task(String name, int duration, String ownerID, String pairprogramer1ID, String pairProgramer2ID){
+    Task(String id, String name, int duration, String ownerID, String pairprogramer1ID, String pairProgramer2ID){
+        this.setId(id);
         this.setName(name);
         this.setDuration(duration);
         this.setOwnerID(ownerID);

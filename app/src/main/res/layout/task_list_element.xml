@@ -69,7 +69,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Assigned to: "
+            android:text="Also assigned to: "
             android:textStyle="bold"/>
         <TextView
             android:id="@+id/taskMember1"
@@ -78,14 +78,14 @@
             android:padding="3dp"
             android:textSize="16sp">
         </TextView>
-        <TextView
-            android:id="@+id/taskMember2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            android:textSize="16sp">
-        </TextView>
-    </LinearLayout>
+        <!-- <TextView
+             android:id="@+id/taskMember2"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:padding="3dp"
+             android:textSize="16sp">
+         </TextView>-->
+     </LinearLayout>
 
 
-</LinearLayout>
+ </LinearLayout>
