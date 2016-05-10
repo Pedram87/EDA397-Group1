@@ -1,5 +1,6 @@
 package com.group1.eda_397_group1;
 
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -246,7 +247,5 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
         dataAdapter.notifyDataSetChanged();
         dataAdapter2.notifyDataSetChanged();
     }
-
-
-
+    
 }

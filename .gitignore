@@ -3,13 +3,9 @@
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
-<<<<<<< HEAD
-/build
-=======
+
 /build
 /captures
-
-.idea/vcs.xml
 
 .idea/vcs.xml
 
@@ -18,6 +14,3 @@
 .idea/.name
 
 .idea/modules.xml
-
-.idea/vcs.xml
->>>>>>> master
