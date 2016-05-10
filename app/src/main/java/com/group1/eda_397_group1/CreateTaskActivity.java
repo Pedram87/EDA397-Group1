@@ -43,6 +43,8 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
     Spinner user2Selector;
     ArrayAdapter<String> dataAdapter;
     ArrayAdapter<String> dataAdapter2;
+
+    private String currentUserID;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -57,6 +59,7 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
 
         final EditText taskName = (EditText) findViewById(R.id.taskName);
         TextView taskOwnerLabel = (TextView) findViewById(R.id.taskOwnerLabel);
+        taskOwnerLabel.setText(taskOwnerLabel.getText() + " " + currentUserID);
         final NumberPicker durationHour = (NumberPicker) findViewById(R.id.durationPickerHour);
         final NumberPicker durationMinute = (NumberPicker) findViewById(R.id.durationPickerMinute);
         Button createTaskButton = (Button) findViewById(R.id.createTaskButton);
@@ -85,6 +88,9 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
         user1Selector.setAdapter(dataAdapter);
         user2Selector.setAdapter(dataAdapter2);
 
+        //Get Current User from Singleton
+        currentUserID = UserSingleton.getInstance().getEmail();
+
 
 
         randomizeButton.setOnClickListener(new View.OnClickListener(){
@@ -104,7 +110,7 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
             public void onClick(View v) {
 
                 //TODO create validation methods for the task
-                Task task = new Task(taskName.getText().toString(), ((durationHour.getValue() * 60) + durationMinute.getValue()), "1@1.com", user1Selector.getSelectedItem().toString(), user2Selector.getSelectedItem().toString());
+                Task task = new Task(taskName.getText().toString(), ((durationHour.getValue() * 60) + durationMinute.getValue()), currentUserID, user1Selector.getSelectedItem().toString(), user2Selector.getSelectedItem().toString());
 
 
                 Log.e(" Create TAsk Activity", task.toString());

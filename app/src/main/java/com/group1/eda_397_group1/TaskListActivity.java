@@ -73,7 +73,7 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
                 //TODO: see if you can send a custom class through putexta. Maybe using "implements serializable" in the Task class?
                 //TODO: See what we have to send here to get the info in the database
                 Intent taskIntent = new Intent(TaskListActivity.this, CreateTaskActivity.class);
-                taskIntent.putExtra("taskName", taskList.get(position).getName());
+                taskIntent.putExtra("taskID", taskList.get(position).getId());
                 startActivity(taskIntent);
 
             }
@@ -96,6 +96,8 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
                         public void onClick(DialogInterface dialog, int which) {
                             Log.d("", "Yes clicked");
                             Task task = taskList.get(positionInner);
+                            taskList.remove(task);
+                            taskListAdapter.notifyDataSetChanged();
                             JSONObject objectToDelete = parser.getDeleteTaskInJSON(task);
                             dbHandler = new DatabaseHandler(objectToDelete);
                             dbHandler.delegate = TaskListActivity.this;
@@ -146,8 +148,9 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
             String tag = json.getString("tag");
 
             if(tag.equals("delete_task")){
+                Log.e("hhhhhhhhhh> ","skjflshfshkfjsfsfs");
                 updateTaskList(json);
-                taskListAdapter.notifyDataSetChanged();
+                taskListView.invalidateViews();
             }
 
             else if(tag.equals("get_tasks")) {
