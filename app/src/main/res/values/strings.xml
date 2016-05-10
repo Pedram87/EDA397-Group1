@@ -27,6 +27,7 @@
     <string name="startCount">Start Countdown</string>
     <string name="stopCount">Stop Countdown</string>
     <string name="CountdownActivity">Countdown</string>
+
     <!-- Strings related to taskListActivity -->
     <string name="lastListDeleteInfo">Click and hold a\n\ task to delete it</string>
 

@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent1);
         }
 
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
