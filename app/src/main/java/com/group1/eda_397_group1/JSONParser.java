@@ -60,12 +60,12 @@ public class JSONParser {
         return readTaskJSON;
     }
 
-    public JSONObject getGetTaskInJSON(Task selectedTask){
+    public JSONObject getGetTaskInJSON(int task_id){
         JSONObject readTaskJSON = new JSONObject();
 
         try{
             readTaskJSON.put("tag", "get_task");
-            readTaskJSON.put("task_id", selectedTask.getId());
+            readTaskJSON.put("task_id", task_id);
 
         }catch (JSONException e){
             e.printStackTrace();
@@ -131,19 +131,20 @@ public class JSONParser {
 
 
     // Get data for a single user identified by email
-    public JSONObject getGetUserInJSON(User user){
+    public JSONObject getGetUserInJSON(User user) {
         JSONObject readTaskJSON = new JSONObject();
 
-        try{
+        try {
             readTaskJSON.put("tag", "get_user");
             readTaskJSON.put("email", user.getEmail());
 
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return readTaskJSON;
     }
+
     public JSONObject getRegisterJSON(String email, String name, String password) {
         JSONObject json = new JSONObject();
         try {
@@ -156,5 +157,6 @@ public class JSONParser {
         }
         Log.e("JSONParser.registerJSON", json.toString());
         return json;
+
     }
 }

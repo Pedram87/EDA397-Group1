@@ -26,11 +26,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //redirecting to login/register
+        Intent intent = new Intent(this, CreateTaskActivity.class);
+        startActivity(intent);
+
         user = UserSingleton.getInstance();
 //        //redirecting to login/register
         if(user == null || user.getEmail() == null || user.getEmail().equals("")) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            Intent intent1 = new Intent(this, LoginActivity.class);
+            startActivity(intent1);
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

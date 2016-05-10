@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.group1.eda_397_group1">
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -20,15 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SecondActivity"
-            android:label="@string/title_activity_second"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.group1.eda_397_group1.MainActivity" />
-        </activity>
+
         <activity android:name=".CreateTaskActivity" />
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -42,6 +38,7 @@
 
 
         <activity android:name=".TaskListActivity"></activity>
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"

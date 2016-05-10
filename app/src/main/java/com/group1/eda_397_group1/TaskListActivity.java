@@ -67,7 +67,7 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
 
                 //TODO: see if you can send a custom class through putexta. Maybe using "implements serializable" in the Task class?
                 //TODO: See what we have to send here to get the info in the database
-                Intent taskIntent = new Intent(TaskListActivity.this, CreateTaskActivity.class);
+                Intent taskIntent = new Intent(TaskListActivity.this, Countdown.class);
                 taskIntent.putExtra("taskID", taskList.get(position).getId());
                 startActivity(taskIntent);
 
