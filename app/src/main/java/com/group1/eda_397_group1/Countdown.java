@@ -33,11 +33,13 @@ public class Countdown extends AppCompatActivity {
 
         timeLength = 8000;
         timeLeft = 0;
+        timeText.setText("8");
     }
-
-    public void setTime(View view){
+//if duration is in minutes, multiply by 60000 to get long num
+    public void setTime(View view, int duration){
         String toSend = new String();
-        toSend = ( (timeLength / 3600000) + ":" + (timeLength / 60000) + ":" + (timeLength / 1000));
+        Integer dur = duration * 60000;
+        toSend = dur.toString();
         timeText.setText( toSend );
     }
 
@@ -70,7 +72,7 @@ public class Countdown extends AppCompatActivity {
                 timeText.setText(String.valueOf(String.valueOf(t/1000)));
             }
             public void onFinish() {
-                timeText.setText("00");
+                timeText.setText("0");
                 ToneGenerator tone = new ToneGenerator(ToneGenerator.TONE_DTMF_A, 25);
                 tone.startTone(ToneGenerator.TONE_DTMF_A, 5000);
             }
@@ -83,7 +85,7 @@ public class Countdown extends AppCompatActivity {
             start.setText("Start Countdown");
             isPaused = false;
             timeLeft = 0;
-            timeText.setText("00");
+            timeText.setText("0");
         }
         else{
             cdTimer.cancel();
