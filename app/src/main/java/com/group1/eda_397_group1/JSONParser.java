@@ -131,18 +131,19 @@ public class JSONParser {
 
 
     // Get data for a single user identified by email
-    public JSONObject getGetUserInJSON(User user){
+    public JSONObject getGetUserInJSON(User user) {
         JSONObject readTaskJSON = new JSONObject();
 
-        try{
+        try {
             readTaskJSON.put("tag", "get_user");
             readTaskJSON.put("email", user.getEmail());
 
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return readTaskJSON;
+    }
 
     public JSONObject getRegisterJSON(String email, String name, String password) {
         JSONObject json = new JSONObject();
