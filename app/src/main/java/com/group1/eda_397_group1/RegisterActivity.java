@@ -106,7 +106,7 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
         } else {
 
             // perform the user registering attempt.
-            databaseHandler = new DatabaseHandler(parser.insertUserJSON(email, username, password1));
+            databaseHandler = new DatabaseHandler(parser.getRegisterJSON(email, username, password1));
             databaseHandler.delegate = this;
             databaseHandler.execute();
         }

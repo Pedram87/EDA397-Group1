@@ -26,12 +26,12 @@ public class JSONParser {
         return json;
     }
 
-    public JSONObject insertUserJSON(String email, String username, String password) {
+    public JSONObject getRegisterJSON(String email, String name, String password) {
         JSONObject json = new JSONObject();
         try {
             json.put("tag", "register");
             json.put("email", email);
-            json.put("name", username);
+            json.put("name", name);
             json.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
