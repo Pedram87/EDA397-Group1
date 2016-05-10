@@ -227,7 +227,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //            SQLiteDatabase mydatabase = openOrCreateDatabase("OurAppDB",MODE_PRIVATE,null);
 //            mydatabase.execSQL("CREATE TABLE IF NOT EXISTS User(Email VARCHAR,Password VARCHAR);");
 //            mydatabase.execSQL("INSERT INTO IF NOT EXISTS User VALUES('" + mEmailView.getText().toString() + "','" + mPasswordView.getText().toString() + "');");
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, TaskListActivity.class);
             startActivity(intent);
             Log.i("TESTINFO", "So eine verkackte Scheiße!");
             Log.i("Singleton", us.getEmail());
