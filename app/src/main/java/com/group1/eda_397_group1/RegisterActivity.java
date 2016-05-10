@@ -82,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
             cancel = true;
         }
 
-        if (!TextUtils.isEmpty(password2) && TextUtils.equals(password1, password2)) {
+        if (!TextUtils.isEmpty(password1) && !TextUtils.isEmpty(password2) && !TextUtils.equals(password1, password2)) {
             mPassword2View.setError(getString(R.string.error_passwords_not_match));
             focusView = mPassword2View;
             cancel = true;
