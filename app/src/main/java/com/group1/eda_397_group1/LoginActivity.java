@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -222,12 +221,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (json.get("success").equals(1)) {
             Log.d("LoginActivity", "login success");
 
+            UserSingleton us = UserSingleton.getInstance();
+            us.setEmail(mEmailView.getText().toString());
             // Go to another activity and store user
-            SQLiteDatabase mydatabase = openOrCreateDatabase("OurAppDB",MODE_PRIVATE,null);
-            mydatabase.execSQL("CREATE TABLE IF NOT EXISTS User(Username VARCHAR,Password VARCHAR);");
-            mydatabase.execSQL("INSERT INTO TutorialsPoint VALUES('" + mEmailView.getText().toString() + "','" + mPasswordView.getText().toString() + "');");
+//            SQLiteDatabase mydatabase = openOrCreateDatabase("OurAppDB",MODE_PRIVATE,null);
+//            mydatabase.execSQL("CREATE TABLE IF NOT EXISTS User(Email VARCHAR,Password VARCHAR);");
+//            mydatabase.execSQL("INSERT INTO IF NOT EXISTS User VALUES('" + mEmailView.getText().toString() + "','" + mPasswordView.getText().toString() + "');");
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            Log.i("TESTINFO", "So eine verkackte Scheiße!");
+            Log.i("Singleton", us.getEmail());
         } else {
             Log.e("LoginActivity", "login error");
             new AlertDialog.Builder(LoginActivity.this)
