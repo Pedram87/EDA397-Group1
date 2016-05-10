@@ -13,10 +13,7 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(View view) {
-        Intent intent = new Intent(this, SecondActivity.class);
-        /* to test the Countdown class, also comment the redirecting to login/register + fab.setOnClickListener block
-        Intent intent = new Intent(this, Countdown.class);
-         */
+        Intent intent = new Intent(this, TaskListActivity.class);
         startActivity(intent);
     }
 
@@ -28,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //redirecting to login/register
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, CreateTaskActivity.class);
         startActivity(intent);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
