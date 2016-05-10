@@ -1,25 +1,36 @@
 package com.group1.eda_397_group1;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class Countdown extends AppCompatActivity {
+//i need the id to get the time from the database
+//need JSON object then with it access db to get time
+public class Countdown extends AppCompatActivity implements AsyncResponse {
 
     private long timeLength;
     private long timeLeft;
     private TextView timeText;
-    CountDownTimer cdTimer;
-    Button start;
-    Button stop;
-    Boolean isPaused;
+    private CountDownTimer cdTimer;
+    private Button start;
+    private Button stop;
+    private Boolean isPaused;
+    private DatabaseHandler databaseHandler = null;
+    private JSONParser parser = new JSONParser();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -35,6 +46,27 @@ public class Countdown extends AppCompatActivity {
         timeLeft = 0;
         timeText.setText("8");
     }
+
+    //function with answer from db
+    public void getTime(View view){
+        databaseHandler = new DatabaseHandler(parser.getGetTaskInJSON(9));
+        databaseHandler.delegate = this;
+        databaseHandler.execute();
+
+
+    }
+
+    @Override
+    public void processFinish(JSONObject json) throws JSONException {
+
+        if (json.get("success").equals(1)) {
+            Log.d("timer", "success");
+
+        } else {
+            Log.e("timer", "error");
+        }
+    }
+
 //if duration is in minutes, multiply by 60000 to get long num
     public void setTime(View view, int duration){
         String toSend = new String();

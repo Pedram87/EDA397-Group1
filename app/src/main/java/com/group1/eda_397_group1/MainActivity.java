@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         user = UserSingleton.getInstance();
 //        //redirecting to login/register
         if(user == null || user.getEmail() == null || user.getEmail().equals("")) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            Intent intent1 = new Intent(this, LoginActivity.class);
+            startActivity(intent1);
         }
 
 

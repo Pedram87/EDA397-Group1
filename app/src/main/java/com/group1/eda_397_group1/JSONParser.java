@@ -60,12 +60,12 @@ public class JSONParser {
         return readTaskJSON;
     }
 
-    public JSONObject getGetTaskInJSON(Task selectedTask){
+    public JSONObject getGetTaskInJSON(int task_id){
         JSONObject readTaskJSON = new JSONObject();
 
         try{
             readTaskJSON.put("tag", "get_task");
-            readTaskJSON.put("task_id", selectedTask.getId());
+            readTaskJSON.put("task_id", task_id);
 
         }catch (JSONException e){
             e.printStackTrace();
