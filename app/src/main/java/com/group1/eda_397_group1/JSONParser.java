@@ -94,7 +94,7 @@ public class JSONParser {
         return updateTaskJSON;
     }
 
-    public JSONObject getDeleteTaskInJSON(Task task, User currentUser){
+    public JSONObject getDeleteTaskInJSON(Task task){
         JSONObject deleteTaskJSON = new JSONObject();
 
 
