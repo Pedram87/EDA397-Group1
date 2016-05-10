@@ -59,7 +59,7 @@ public class CustomListAdapter extends BaseAdapter {
         taskOwner.setText(data.get(position).getOwnerID());
 
         TextView taskDuration = (TextView) vi.findViewById(R.id.taskDuration);
-        taskDuration.setText(data.get(position).getDuration() + "");
+        taskDuration.setText(data.get(position).getDuration() + "" + "minutes");
 
         TextView taskMember1 = (TextView) vi.findViewById(R.id.taskMember1);
         taskMember1.setText(data.get(position).getPairprogramer2D());
