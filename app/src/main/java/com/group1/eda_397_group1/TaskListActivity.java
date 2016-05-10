@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -23,6 +24,7 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
     //ListView
     private ListView taskListView;
     private Button createTaskButton;
+    private Button refreshButton;
 
     private CustomListAdapter taskListAdapter;
     private ArrayList<Task> taskList;
@@ -41,29 +43,22 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
         //Find the "createTaskButton"
         createTaskButton = (Button) findViewById(R.id.createTaskButton);
 
+        //Find the refresh button
+        refreshButton = (Button) findViewById(R.id.refreshButton);
+        refreshButton.setClickable(true);
+
         dbHandler = new DatabaseHandler(parser.getGetTasksInJSON("2@2.com"));
         dbHandler.delegate = this;
         dbHandler.execute();
 
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
 
+                taskListAdapter.update();
 
-        //Create and populate the list of tasks
-        //TODO: Add the tasks from the database in the list
-        /*Task[] tasks = new Task[]{new Task("JespersTask", 5, "emailJesper", "emailBerima", "emailMusse"),
-                new Task("JespersTask", 5, "emailJesper" ,"emailBerima", "emailMusse")};
-
-
-        taskList = new ArrayList<>();
-        taskList.addAll(Arrays.asList(tasks));
-
-        //Create ArrayAdapter using the tasklist
-        if(taskList != null) {
-            taskListAdapter = new CustomListAdapter(this, taskList);
-        }
-
-        if(taskListAdapter!=null) {
-            taskListView.setAdapter(taskListAdapter);
-        }*/
+            }
+        });
 
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -79,7 +74,7 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
             }
         });
 
-            taskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        taskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                                int pos, long id) {
@@ -148,9 +143,9 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
             String tag = json.getString("tag");
 
             if(tag.equals("delete_task")){
-                Log.e("hhhhhhhhhh> ","skjflshfshkfjsfsfs");
+                Log.e("hhhhhhhhhh> ", "skjflshfshkfjsfsfs");
                 updateTaskList(json);
-                taskListView.invalidateViews();
+               // taskListView.invalidateViews();
             }
 
             else if(tag.equals("get_tasks")) {
@@ -196,6 +191,7 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
             Task task = new Task(taskName, duration, ownerID, pairProg1, pairProg2);
             task.setId(id);
             taskList.add(task);
+
 
         }
 
