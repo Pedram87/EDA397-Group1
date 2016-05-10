@@ -68,4 +68,11 @@ public class CustomListAdapter extends BaseAdapter {
         //taskMember2.setText(data.get(position).getPairprogramer2D());
         return vi;
     }
+
+    public void update(){
+        this.notifyDataSetChanged();
+        this.notifyDataSetInvalidated();
+
+
+    }
 }

@@ -30,12 +30,18 @@
         android:lines="2"
         android:maxLines="2"
         android:layout_gravity="left"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical" >
+        </TextView>
+
+        <Button
+            android:id="@+id/refreshButton"
+            android:layout_width="45dp"
+            android:layout_height="match_parent" />
 
     <Button
         android:id="@+id/createTaskButton"
         android:text="Create new task"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 
     </LinearLayout>

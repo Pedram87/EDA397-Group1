@@ -46,6 +46,8 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, AsyncResponse {
 
+    private UserSingleton us;
+
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -221,7 +223,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (json.get("success").equals(1)) {
             Log.d("LoginActivity", "login success");
 
-            UserSingleton us = UserSingleton.getInstance();
+            us = UserSingleton.getInstance();
             us.setEmail(mEmailView.getText().toString());
             // Go to another activity and store user
 //            SQLiteDatabase mydatabase = openOrCreateDatabase("OurAppDB",MODE_PRIVATE,null);
@@ -229,8 +231,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //            mydatabase.execSQL("INSERT INTO IF NOT EXISTS User VALUES('" + mEmailView.getText().toString() + "','" + mPasswordView.getText().toString() + "');");
             Intent intent = new Intent(this, TaskListActivity.class);
             startActivity(intent);
-            Log.i("TESTINFO", "So eine verkackte Scheiße!");
-            Log.i("Singleton", us.getEmail());
         } else {
             Log.e("LoginActivity", "login error");
             new AlertDialog.Builder(LoginActivity.this)

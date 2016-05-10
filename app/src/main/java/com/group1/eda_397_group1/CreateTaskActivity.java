@@ -1,5 +1,6 @@
 package com.group1.eda_397_group1;
 
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -59,6 +60,8 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
 
         final EditText taskName = (EditText) findViewById(R.id.taskName);
         TextView taskOwnerLabel = (TextView) findViewById(R.id.taskOwnerLabel);
+        //Get Current User from Singleton
+        currentUserID = UserSingleton.getInstance().getEmail();
         taskOwnerLabel.setText(taskOwnerLabel.getText() + " " + currentUserID);
         final NumberPicker durationHour = (NumberPicker) findViewById(R.id.durationPickerHour);
         final NumberPicker durationMinute = (NumberPicker) findViewById(R.id.durationPickerMinute);
@@ -88,8 +91,7 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
         user1Selector.setAdapter(dataAdapter);
         user2Selector.setAdapter(dataAdapter2);
 
-        //Get Current User from Singleton
-        currentUserID = UserSingleton.getInstance().getEmail();
+
 
 
 
@@ -246,4 +248,5 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
         dataAdapter.notifyDataSetChanged();
         dataAdapter2.notifyDataSetChanged();
     }
+
 }
