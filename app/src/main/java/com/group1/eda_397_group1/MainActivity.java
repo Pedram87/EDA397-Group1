@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private UserSingleton user;
 
     public void sendMessage(View view) {
-        Intent intent = new Intent(this, SecondActivity.class);
+        Intent intent = new Intent(this, TaskListActivity.class);
         startActivity(intent);
     }
 

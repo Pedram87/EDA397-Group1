@@ -6,7 +6,7 @@ package com.group1.eda_397_group1;
 public class UserSingleton {
 
     private static UserSingleton instance;
-    private String email;
+    private static String email;
 //    private String name;
 
     private UserSingleton() {}
@@ -23,7 +23,7 @@ public class UserSingleton {
         return instance;
     }
 
-    public void setEmail(String email) {
+    public static void setEmail(String email) {
         instance.email = email;
     }
 //
@@ -31,7 +31,7 @@ public class UserSingleton {
 //        instance.name = name;
 //    }
 
-    public String getEmail() {
+    public static String getEmail() {
         return email;
     }
 }
