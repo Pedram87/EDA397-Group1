@@ -76,13 +76,15 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
             cancel = true;
         }
 
+        // Check for a valid password repetition, if the user entered one.
         if (!TextUtils.isEmpty(password2) && !isPasswordValid(password2)) {
             mPassword2View.setError(getString(R.string.error_invalid_password));
             focusView = mPassword2View;
             cancel = true;
         }
 
-        if (!TextUtils.isEmpty(password1) && !TextUtils.isEmpty(password2) && !TextUtils.equals(password1, password2)) {
+        // Check if a password is entered and repeated and the passwords match
+        if (!TextUtils.equals(password1, password2)) {
             mPassword2View.setError(getString(R.string.error_passwords_not_match));
             focusView = mPassword2View;
             cancel = true;
@@ -113,13 +115,11 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 3;
+        return password.length() > 4;
     }
 
     @Override
