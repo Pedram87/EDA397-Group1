@@ -3,7 +3,7 @@ package com.group1.eda_397_group1;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Max on 10.05.2016.
@@ -13,7 +13,7 @@ public class SingletonTest {
     @Test
     public void singleton_creation_worksCorrect() throws NullPointerException, Exception {
         UserSingleton user = UserSingleton.getInstance();
-        assertNotEquals(null, user);
+        assertNotNull(user);
         assertEquals(null, user.getEmail());
     }
 
