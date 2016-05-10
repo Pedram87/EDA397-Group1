@@ -57,7 +57,7 @@
 
             android:name=".Countdown"
             android:label="@string/CountdownActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".TaskListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.group1.eda_397_group1.MainActivity" />
