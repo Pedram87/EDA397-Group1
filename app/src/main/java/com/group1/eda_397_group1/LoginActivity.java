@@ -4,22 +4,23 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentResolver;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build.VERSION;
 import android.os.Build;
+import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -37,8 +38,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -66,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         setupActionBar();
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.txtUsername);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -86,6 +85,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
                 attemptLogin();
+            }
+        });
+
+        Button mRegisterButton = (Button) findViewById(R.id.register_button);
+        mRegisterButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startRegisterActivity();
             }
         });
 
@@ -153,6 +160,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    private void startRegisterActivity() {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -209,7 +221,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (json.get("success").equals(1)) {
             Log.d("LoginActivity", "login success");
 
+            UserSingleton us = UserSingleton.getInstance();
+            us.setEmail(mEmailView.getText().toString());
             // Go to another activity and store user
+//            SQLiteDatabase mydatabase = openOrCreateDatabase("OurAppDB",MODE_PRIVATE,null);
+//            mydatabase.execSQL("CREATE TABLE IF NOT EXISTS User(Email VARCHAR,Password VARCHAR);");
+//            mydatabase.execSQL("INSERT INTO IF NOT EXISTS User VALUES('" + mEmailView.getText().toString() + "','" + mPasswordView.getText().toString() + "');");
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            Log.i("TESTINFO", "So eine verkackte Scheiße!");
+            Log.i("Singleton", us.getEmail());
         } else {
             Log.e("LoginActivity", "login error");
             new AlertDialog.Builder(LoginActivity.this)
@@ -227,7 +248,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return true;//email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
