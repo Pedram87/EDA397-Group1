@@ -46,7 +46,7 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, AsyncResponse {
 
-    UserSingleton us;
+    private UserSingleton us;
 
     /**
      * Id to identity READ_CONTACTS permission request.
