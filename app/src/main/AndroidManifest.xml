@@ -41,7 +41,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.group1.eda_397_group1.MainActivity" />
         </activity>
-        <activity android:name=".RegisterActivity"></activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/register"
+            android:parentActivityName=".LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.group1.eda_397_group1.RegisterActivity" />
+        </activity>
     </application>
 
 </manifest>

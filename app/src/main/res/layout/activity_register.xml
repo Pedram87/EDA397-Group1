@@ -24,25 +24,18 @@
             android:ems="10"
             android:id="@+id/txtEmail"
             android:layout_gravity="center_horizontal"
-            android:text="@string/prompt_email"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:hint="@string/prompt_email" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="@string/username"
             android:ems="10"
             android:id="@+id/txtUsername"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="15dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/password"
-            android:id="@+id/lblPassword" />
+            android:layout_marginBottom="15dp"
+            android:hint="@string/username" />
 
         <EditText
             android:layout_width="match_parent"
@@ -51,8 +44,8 @@
             android:ems="10"
             android:id="@+id/txtPassword1"
             android:layout_gravity="center_horizontal"
-            android:text="Password"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:hint="@string/password" />
 
         <EditText
             android:layout_width="match_parent"
@@ -61,8 +54,8 @@
             android:ems="10"
             android:id="@+id/txtPassword2"
             android:layout_gravity="center_horizontal"
-            android:text="Password"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp"
+            android:hint="@string/repeat_password" />
 
         <Button
             android:layout_width="wrap_content"
