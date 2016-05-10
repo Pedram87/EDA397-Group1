@@ -26,7 +26,7 @@ public class JSONParser {
         return json;
     }
 
-    public JSONObject getCreateTaskInJSON(Task task, User currentUser){
+    public JSONObject getCreateTaskInJSON(Task task){
         JSONObject createTaskJSON = new JSONObject();
 
 
@@ -107,5 +107,41 @@ public class JSONParser {
         }
 
         return deleteTaskJSON;
+    }
+
+
+
+
+   // TODO Check if implemented in php
+    /* Get User data from online Database */
+
+    // Get data for all users
+    public JSONObject getGetUsersInJSON(){
+        JSONObject readTaskJSON = new JSONObject();
+
+        try{
+            readTaskJSON.put("tag", "getAllUsers");
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        return readTaskJSON;
+    }
+
+
+    // Get data for a single user identified by email
+    public JSONObject getGetUserInJSON(User user){
+        JSONObject readTaskJSON = new JSONObject();
+
+        try{
+            readTaskJSON.put("tag", "get_user");
+            readTaskJSON.put("email", user.getEmail());
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        return readTaskJSON;
     }
 }

@@ -22,17 +22,19 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 public class CreateTaskActivity extends AppCompatActivity implements AsyncResponse{
 
   //  private CreatePairProgTask cppTask;
-    private GetUserDataFromDatabase getUserDataFromDatabaseTask;
     private  DatabaseHandler databaseHandler;
     private JSONParser parser = new JSONParser();
     private ArrayList<User> users;
@@ -60,13 +62,14 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
         Button createTaskButton = (Button) findViewById(R.id.createTaskButton);
         user1Selector = (Spinner) findViewById(R.id.user1);
         user2Selector = (Spinner) findViewById(R.id.user2);
+        Button randomizeButton = (Button) findViewById(R.id.randomizeButton);
 
         // Tasks and Users
-        getUserDataFromDatabaseTask = new GetUserDataFromDatabase();
-        getUserDataFromDatabaseTask.execute((Void)null);
+        //getUserDataFromDatabaseTask = new GetUserDataFromDatabase();
+        //getUserDataFromDatabaseTask.execute((Void)null);
 
         // Get from online database
-
+        getDataForAllUsersInRemoteDB();
 
 
 
@@ -83,18 +86,30 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
         user2Selector.setAdapter(dataAdapter2);
 
 
+
+        randomizeButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                int randomNumber1 = new Random().nextInt(usersString.size());
+                int randomNumber2 = new Random().nextInt(usersString.size());
+                user1Selector.setSelection(randomNumber1);
+                user2Selector.setSelection(randomNumber2);
+
+                user1Selector.refreshDrawableState();
+                user2Selector.refreshDrawableState();
+            }
+        });
+
+
         createTaskButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 //TODO create validation methods for the task
-                Task task = new Task(taskName.getText().toString(), ((durationHour.getValue() * 60) + durationMinute.getValue()), "1@1.com", "2@2.com", "3@3.com");
+                Task task = new Task(taskName.getText().toString(), ((durationHour.getValue() * 60) + durationMinute.getValue()), "1@1.com", user1Selector.getSelectedItem().toString(), user2Selector.getSelectedItem().toString());
 
-              /*  cppTask = new CreatePairProgTask(task);
-                cppTask.execute((Void) null); */
 
-                Log.e(" Create TAsk Activity" , task.toString());
+                Log.e(" Create TAsk Activity", task.toString());
 
-                createTaskInRemoteDB(task, new User("2@2.com", "jimmy", "elsa"));
+                createTaskInRemoteDB(task);
 
 
             }
@@ -116,10 +131,20 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    public void createTaskInRemoteDB(Task task, User user){
-        databaseHandler = new DatabaseHandler(parser.getCreateTaskInJSON(task, user));
+    public void createTaskInRemoteDB(Task task){
+        databaseHandler = new DatabaseHandler(parser.getCreateTaskInJSON(task));
         databaseHandler.delegate = this;
         databaseHandler.execute();
+    }
+
+    public ArrayList<User> getDataForAllUsersInRemoteDB(){
+        ArrayList<User> allUsers = new ArrayList<>();
+
+        databaseHandler = new DatabaseHandler(parser.getGetUsersInJSON());
+        databaseHandler.delegate = this;
+        databaseHandler.execute();
+
+        return allUsers;
     }
 
     @Override
@@ -165,8 +190,18 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
 
     @Override
     public void processFinish(JSONObject json) throws JSONException {
+        String tag = json.getString("tag");
+        // error_msg
+
         if (json.get("success").equals(1)) {
-            Log.d("Create task activity", "task created successfully");
+            if(tag.equals("getAllUsers")){
+                Log.d("User Data acquired:", json.getJSONArray("user").toString());
+                processRemoteUserData(json);
+            }
+            else if(tag.equals("create_task")){
+                Log.d("Create task activity", "task created successfully");
+            }
+
 
             // Go to another activity and store user
         } else {
@@ -185,95 +220,24 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
     }
 
 
-    public class GetUserDataFromDatabase extends AsyncTask<Void, Void, ArrayList<User>> {
-        DatabaseDummy database;
-        ArrayList<User> users;
+    public void processRemoteUserData(JSONObject json)throws JSONException{
+        ArrayList<User> usersFromRemote = new ArrayList<>();
+        JSONArray usersFromRemoteJSON = json.getJSONArray("user");
 
-
-        public GetUserDataFromDatabase() {
-            //database = DatabaseDummy.getInstance();
-            //users = null;
+        // Extract users from the JSONArray to a java Array
+        for(int i = 0; i < usersFromRemoteJSON.length(); i++){
+            JSONObject userJSon = (JSONObject)usersFromRemoteJSON.get(i);
+            User user = new User(userJSon.getString("email"), userJSon.getString("name"), "");
+            usersFromRemote.add(user);
+            Log.e("User" + i, user.toString());
         }
 
-        @Override
-        protected ArrayList<User> doInBackground(Void... params) {
-//            JSONObject jsonReturnObject = null;
-//            JSONParser parser = new JSONParser();
-//
-//            String result = null;
-            try {
 
-                users = database.getInstance().getUsers();
-
-            } catch (Exception e) {
-                Log.e("GetUsersFromDb:", e.toString());
-            }
-
-            return users;
+        for(User u: usersFromRemote){
+            usersString.add(u.getEmail());
         }
 
-        @Override
-        protected void onPostExecute(final ArrayList<User> us) {
-            users = getUserDataFromDatabaseTask.getUsers(); // DatabaseDummy.getInstance().getUsers();//
-
-
-            for(User u: users){
-                usersString.add(u.getFirstName() + " " + u.getLastName());
-            }
-
-            dataAdapter.notifyDataSetChanged();
-            dataAdapter2.notifyDataSetChanged();
-            //user2Selector.refreshDrawableState();
-        }
-
-        @Override
-        protected void onCancelled() {
-            users = null;
-            // showProgress(false);
-        }
-
-        public ArrayList<User> getUsers(){
-            return users;
-        }
-    }
-
-
-
-    // TODO Remove this class laster
-    public class CreatePairProgTask extends AsyncTask<Void, Void, Boolean> {
-
-        private Task task;
-
-        public CreatePairProgTask(Task task) {
-            this.task = task;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            JSONObject jsonReturnObject = null;
-            JSONParser parser = new JSONParser();
-
-            String result = null;
-            try {
-
-                Log.e("CreatePairProgActivity", task.toString()); //result);
-
-            } catch (Exception e) {
-
-            }
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            //cppTask = null;
-        }
-
-        @Override
-        protected void onCancelled() {
-            //cppTask = null;
-            // showProgress(false);
-        }
+        dataAdapter.notifyDataSetChanged();
+        dataAdapter2.notifyDataSetChanged();
     }
 }
