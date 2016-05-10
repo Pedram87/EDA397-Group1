@@ -32,6 +32,8 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
     private DatabaseHandler dbHandler;
     private JSONParser parser = new JSONParser();
 
+    private String currentUserID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +47,9 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
 
         //Find the refresh button
         refreshButton = (Button) findViewById(R.id.refreshButton);
-        refreshButton.setClickable(true);
 
-        dbHandler = new DatabaseHandler(parser.getGetTasksInJSON("2@2.com"));
+        currentUserID = UserSingleton.getInstance().getEmail();
+        dbHandler = new DatabaseHandler(parser.getGetTasksInJSON(currentUserID));
         dbHandler.delegate = this;
         dbHandler.execute();
 
@@ -64,9 +66,6 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-                //TODO: see if you can send a custom class through putexta. Maybe using "implements serializable" in the Task class?
-                //TODO: See what we have to send here to get the info in the database
                 Intent taskIntent = new Intent(TaskListActivity.this, CreateTaskActivity.class);
                 taskIntent.putExtra("taskID", taskList.get(position).getId());
                 startActivity(taskIntent);
@@ -86,14 +85,14 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
 
                     builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
-
-
                         public void onClick(DialogInterface dialog, int which) {
-                            Log.d("", "Yes clicked");
+
                             Task task = taskList.get(positionInner);
                             taskList.remove(task);
                             taskListAdapter.notifyDataSetChanged();
+
                             JSONObject objectToDelete = parser.getDeleteTaskInJSON(task);
+
                             dbHandler = new DatabaseHandler(objectToDelete);
                             dbHandler.delegate = TaskListActivity.this;
                             dbHandler.execute();
@@ -106,7 +105,6 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Log.d("", "No clicked");
                             dialog.dismiss();
                         }
                     });
@@ -118,16 +116,9 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
                 }
             });
 
-
-
-
         createTaskButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Perform action on click
-
                 Intent activityChangeIntent = new Intent(TaskListActivity.this, CreateTaskActivity.class);
-
-                // currentContext.startActivity(activityChangeIntent);
 
                 TaskListActivity.this.startActivity(activityChangeIntent);
             }
@@ -145,7 +136,6 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
             if(tag.equals("delete_task")){
                 Log.e("hhhhhhhhhh> ", "skjflshfshkfjsfsfs");
                 updateTaskList(json);
-               // taskListView.invalidateViews();
             }
 
             else if(tag.equals("get_tasks")) {
@@ -174,14 +164,16 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
         JSONArray jsonArray = json.getJSONArray("tasks");
 
         for (int i = 0; i < jsonArray.length(); i++) {
+
             JSONObject taskObject = (JSONObject) jsonArray.get(i);
+
             String taskName = taskObject.getString("name");
             String id = taskObject.getString("task_id");
             int duration = taskObject.getInt("total_time");
             String ownerID = taskObject.getString("owner");
-            //TODO Add pair pgorrammers in db json
             String pairProg1 = taskObject.getString("pairProgrammer1");
-            String pairProg2 = "";
+            String pairProg2;
+
             if (taskObject.getString("pairProgrammer2") != null) {
                 pairProg2 = taskObject.getString("pairProgrammer2");
             } else {
@@ -191,11 +183,7 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
             Task task = new Task(taskName, duration, ownerID, pairProg1, pairProg2);
             task.setId(id);
             taskList.add(task);
-
-
         }
-
-        //taskList.addAll(Arrays.asList(tasks));
 
         //Create ArrayAdapter using the tasklist
         if (taskList != null) {
