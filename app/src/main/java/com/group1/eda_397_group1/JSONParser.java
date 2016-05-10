@@ -143,6 +143,7 @@ public class JSONParser {
         }
 
         return readTaskJSON;
+    }
     public JSONObject getRegisterJSON(String email, String name, String password) {
         JSONObject json = new JSONObject();
         try {

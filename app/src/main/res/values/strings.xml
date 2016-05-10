@@ -21,14 +21,12 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-<<<<<<< HEAD
 
     <!-- Strings related to taskListActivity -->
     <string name="lastListDeleteInfo">Click and hold a\n\ task to delete it</string>
-=======
+
     <string name="password">Password</string>
     <string name="repeat_password">Repeat password</string>
     <string name="username">Username</string>
     <string name="register">Register</string>
->>>>>>> refs/remotes/origin/master
 </resources>
