@@ -2,11 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.group1.eda_397_group1">
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -33,6 +29,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.group1.eda_397_group1.MainActivity" />
         </activity>
+        <activity android:name=".CreateTaskActivity" />
+        <!--
+             ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+
+            <meta-data
+                android:name="com.google.android.gms.version"
+                android:value="@integer/google_play_services_version" />
+
+
+
+        <activity android:name=".TaskListActivity"></activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
@@ -44,10 +53,18 @@
         <activity
             android:name=".Countdown"
             android:label="@string/CountdownActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".TaskListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.group1.eda_397_group1.MainActivity" />
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/register"
+            android:parentActivityName=".LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.group1.eda_397_group1.RegisterActivity" />
         </activity>
     </application>
 
