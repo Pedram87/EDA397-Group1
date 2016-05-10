@@ -95,12 +95,11 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
 
                         public void onClick(DialogInterface dialog, int which) {
                             Log.d("", "Yes clicked");
-                            //TODO:
                             Task task = taskList.get(positionInner);
-                            /*JSONObject objectToDelete = parser.getDeleteTaskInJSON(task, );
-                            objectToDelete.
-
-                            taskListAdapter.notifyDataSetChanged();*/
+                            JSONObject objectToDelete = parser.getDeleteTaskInJSON(task);
+                            dbHandler = new DatabaseHandler(objectToDelete);
+                            dbHandler.delegate = TaskListActivity.this;
+                            dbHandler.execute();
                             dialog.dismiss();
                         }
 
@@ -144,43 +143,15 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
         if (json.get("success").equals(1)) {
             Log.d("Create task activity", "task created successfully");
 
-            //Task[] tasks = new Task[]{new Task("JespersTask", 5, "emailJesper", "emailBerima", "emailMusse"),
-                    //new Task("JespersTask", 5, "emailJesper" ,"emailBerima", "emailMusse")};
+            String tag = json.getString("tag");
 
-
-            taskList = new ArrayList<Task>();
-            JSONArray jsonArray = json.getJSONArray("tasks");
-
-
-            for(int i = 0; i < jsonArray.length(); i++){
-                JSONObject taskObject = (JSONObject) jsonArray.get(i);
-                String taskName = taskObject.getString("name");
-                String id = taskObject.getString("task_id");
-                int duration = taskObject.getInt("total_time");
-                String ownerID = taskObject.getString("owner");
-                //TODO Add pair pgorrammers in db json
-                String pairProg1 =  taskObject.getString("pairProgrammer1");
-                String pairProg2 = "";
-                if(taskObject.getString("pairProgrammer2")!=null){
-                    pairProg2 =  taskObject.getString("pairProgrammer2");
-                }
-                else{
-                    pairProg2 = "No other user assigned";
-                }
-
-                taskList.add(new Task(id, taskName, duration, ownerID, pairProg1, pairProg2));
-
+            if(tag.equals("delete_task")){
+                updateTaskList(json);
+                taskListAdapter.notifyDataSetChanged();
             }
 
-            //taskList.addAll(Arrays.asList(tasks));
-
-            //Create ArrayAdapter using the tasklist
-            if(taskList != null) {
-                taskListAdapter = new CustomListAdapter(this, taskList);
-            }
-
-            if(taskListAdapter!=null) {
-                taskListView.setAdapter(taskListAdapter);
+            else if(tag.equals("get_tasks")) {
+                updateTaskList(json);
             }
 
 
@@ -197,6 +168,43 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
+        }
+    }
+
+    public void updateTaskList(JSONObject json) throws JSONException{
+        taskList = new ArrayList<Task>();
+        JSONArray jsonArray = json.getJSONArray("tasks");
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject taskObject = (JSONObject) jsonArray.get(i);
+            String taskName = taskObject.getString("name");
+            String id = taskObject.getString("task_id");
+            int duration = taskObject.getInt("total_time");
+            String ownerID = taskObject.getString("owner");
+            //TODO Add pair pgorrammers in db json
+            String pairProg1 = taskObject.getString("pairProgrammer1");
+            String pairProg2 = "";
+            if (taskObject.getString("pairProgrammer2") != null) {
+                pairProg2 = taskObject.getString("pairProgrammer2");
+            } else {
+                pairProg2 = "No other user assigned";
+            }
+
+            Task task = new Task(taskName, duration, ownerID, pairProg1, pairProg2);
+            task.setId(id);
+            taskList.add(task);
+
+        }
+
+        //taskList.addAll(Arrays.asList(tasks));
+
+        //Create ArrayAdapter using the tasklist
+        if (taskList != null) {
+            taskListAdapter = new CustomListAdapter(this, taskList);
+        }
+
+        if (taskListAdapter != null) {
+            taskListView.setAdapter(taskListAdapter);
         }
     }
 }
