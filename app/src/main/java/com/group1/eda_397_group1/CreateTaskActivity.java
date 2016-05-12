@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -200,6 +201,7 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
     public void processFinish(JSONObject json) throws JSONException {
         String tag = json.getString("tag");
         // error_msg
+        Toast toast;
 
         if (json.get("success").equals(1)) {
             if(tag.equals("getAllUsers")){
@@ -207,7 +209,9 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
                 processRemoteUserData(json);
             }
             else if(tag.equals("create_task")){
-                Log.d("Create task activity", "task created successfully");
+                toast = Toast.makeText(getBaseContext(), "Task created successfully", Toast.LENGTH_LONG);
+                toast.show();
+                finish();
             }
 
 
