@@ -1,14 +1,10 @@
 package com.group1.eda_397_group1;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +27,11 @@ public class Countdown extends AppCompatActivity implements AsyncResponse {
     private Boolean isPaused;
     private DatabaseHandler databaseHandler = null;
     private JSONParser parser = new JSONParser();
+    private Intent in;
+    private int hour;
+    private int hmod;
+    private int min;
+    private int sec;
 
 
     @Override
@@ -43,15 +44,18 @@ public class Countdown extends AppCompatActivity implements AsyncResponse {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         isPaused = false;
 
-        //timeLength = 8000;
+        in = getIntent();
+
         timeLeft = 0;
-//        timeText.setText("8");
         getTime();
     }
 
     //function with answer from db
     public void getTime() {
-        databaseHandler = new DatabaseHandler(parser.getGetTaskInJSON(9));
+        String id = in.getStringExtra("taskID");
+        int taskId = Integer.parseInt(id);
+
+        databaseHandler = new DatabaseHandler(parser.getGetTaskInJSON(taskId));
         databaseHandler.delegate = this;
         databaseHandler.execute();
 
@@ -72,23 +76,18 @@ public class Countdown extends AppCompatActivity implements AsyncResponse {
                 Log.e("Countdown: duration", "Countdown error in parsing duration from the task");
             }
 
-            timeText.setText((String) returnTask.get("duration"));
-            //setTime(duration);
+            hour = duration / 60;
+            min = duration % 60;
+            sec = min / 60;
+
+            setTimerText();
+
             timeLength = duration * 60000;
 
         } else {
             Log.e("timer", "error");
         }
     }
-
-//if duration is in minutes, multiply by 60000 to get long num
-//    public void setTime(Integer duration){
-//        String toSend = new String();
-//        timeLength = duration.intValue() * 60000;
-//        toSend = duration.toString();
-//        timeText.setText( toSend );
-//    }
-
 
     public void startCount (View view) {
         final View v = view;
@@ -107,7 +106,7 @@ public class Countdown extends AppCompatActivity implements AsyncResponse {
         else{
             start.setText("Start Countdown");
             isPaused = false;
-            stopCount(v);
+            cdTimer.cancel();
         }
     }
 
@@ -116,15 +115,15 @@ public class Countdown extends AppCompatActivity implements AsyncResponse {
             public void onTick(long t) {
                 timeLeft = t;
 
-                timeText.setText(String.valueOf(String.valueOf(t/1000)));
-                //if(t == timeText/2){
-                    //show message to swap
-
-                //}
+                hour = (int) (timeLeft/1000) / 3600;
+                hmod = (int) (timeLeft/1000) % 3600;
+                min =  hmod / 60;
+                sec = hmod % 60;
+                setTimerText();
             }
             public void onFinish() {
-                timeText.setText("0");
-                //the tone generator doesnt work in the simulator
+                timeText.setText("00:00:00");
+                //the tone generator doesnt work in the emulator
                 ToneGenerator tone = new ToneGenerator(ToneGenerator.TONE_DTMF_A, 25);
                 tone.startTone(ToneGenerator.TONE_DTMF_A, 5000);
             }
@@ -132,15 +131,33 @@ public class Countdown extends AppCompatActivity implements AsyncResponse {
     }
 
     public void stopCount (View view) {
-        if(isPaused){
+        if(timeLeft>0)
             cdTimer.cancel();
-            start.setText("Start Countdown");
-            isPaused = false;
-            timeLeft = 0;
-            timeText.setText("0");
-        }
-        else{
-            cdTimer.cancel();
-        }
+        start.setText("Start Countdown");
+        isPaused = false;
+        timeLeft = 0;
+        timeText.setText("00:00:00");
+    }
+
+    protected void setTimerText () {
+        String sStr;
+        String mStr;
+        String hStr;
+
+
+        if (sec<10)
+            sStr = "0" + sec;
+        else
+            sStr = "" + sec;
+        if (min<10)
+            mStr = "0" + min;
+        else
+            mStr = "" + min;
+        if (hour<10)
+            hStr = "0" + hour;
+        else
+            hStr = "" + hour;
+
+        timeText.setText(hStr + ":" + mStr + ":" + sStr);
     }
 }

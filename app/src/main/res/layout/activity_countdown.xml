@@ -10,7 +10,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/countdown_layout">
+        android:id="@+id/countdown_layout"
+        android:background="@drawable/hourglass">
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,7 +22,9 @@
             android:layout_marginTop="134dp"
             android:minHeight="25dp"
             android:minWidth="55dp"
-            android:textSize="75sp"/>
+            android:textSize="75sp"
+            android:textColor="#000000"
+            />
 
         <Button
             android:layout_width="wrap_content"
@@ -31,7 +34,9 @@
             android:layout_marginTop="86dp"
             android:onClick="startCount"
             android:layout_below="@+id/timeView"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            android:background="#38ed0a"
+            android:textColor="#000000"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -40,6 +45,8 @@
             android:id="@+id/stopCount"
             android:onClick="stopCount"
             android:layout_alignTop="@+id/startCount"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:background="#f60a0a"
+            android:textColor="#000000"/>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
