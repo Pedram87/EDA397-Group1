@@ -67,7 +67,7 @@
 
         // Get all users in the system
         public function getAllUsers() {
-            $query = "SELECT * FROM Users";
+            $query = "SELECT email, name FROM Users";
             $result = mysql_query($query) or die(mysql_error());
             $array = array();
             
@@ -139,7 +139,13 @@
             // Prevent injection
             $current_user = mysql_real_escape_string($current_user);
 
-            $query = "SELECT t.task_id, a.email, t.name, t.total_time, t.owner
+            // $query = "SELECT t.task_id, a.email, t.name, t.total_time, t.owner
+            //           FROM TaskAssign a
+            //           INNER JOIN Tasks t ON a.task_id = t.task_id
+            //           WHERE a.email = '$current_user'";
+
+            $query = "SELECT t.task_id, a.email as pairProgrammer1, (SELECT b.email FROM TaskAssign b WHERE b.task_id = 9 AND b.email != '$current_user')
+                      AS pairProgrammer2, t.name, t.total_time, t.owner
                       FROM TaskAssign a
                       INNER JOIN Tasks t ON a.task_id = t.task_id
                       WHERE a.email = '$current_user'";

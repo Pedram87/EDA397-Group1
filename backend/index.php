@@ -47,7 +47,7 @@
                     if (password_verify($password, $hash)) {
                         $response["success"]            = 1;
                         $response["user"]["email"]      = $user["email"];
-                        $response["user"]["nickname"]   = $user["nickname"];
+                        $response["user"]["name"]       = $user["name"];
                     } else {
                         $response["error"]              = 1;
                         $response["error_msg"]          = "Password incorrect";
