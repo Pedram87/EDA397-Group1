@@ -161,8 +161,8 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
 
             // Go to another activity and store user
         } else {
-            Log.e("LoginActivity", "login error");
-            new AlertDialog.Builder(TaskListActivity.this)
+            Log.e("TaskListActivity", json.get("error_msg").toString());
+/*            new AlertDialog.Builder(TaskListActivity.this)
                     .setTitle("Create Task failure")
                     .setMessage(json.get("error_msg").toString())
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -171,7 +171,7 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
                         }
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
+                    .show();*/
         }
     }
 
