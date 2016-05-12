@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Task name: "
+            android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/taskName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:textSize="16sp"
+        android:textStyle="bold">
+    </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Owner: "
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/taskOwner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:textSize="16sp">
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Duration: "
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/taskDuration"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:textSize="16sp">
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Also assigned to: "
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/taskMember1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:textSize="16sp">
+        </TextView>
+        <!-- <TextView
+             android:id="@+id/taskMember2"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:padding="3dp"
+             android:textSize="16sp">
+         </TextView>-->
+     </LinearLayout>
+
+
+ </LinearLayout>

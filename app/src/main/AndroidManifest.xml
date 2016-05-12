@@ -14,40 +14,46 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".SecondActivity"
-            android:label="@string/title_activity_second"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".CreateTaskActivity" />
+        <!--
+             ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.group1.eda_397_group1.MainActivity" />
-        </activity>
+                android:name="com.google.android.gms.version"
+                android:value="@integer/google_play_services_version" />
+
+
+
+        <activity android:name=".TaskListActivity"></activity>
+
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.group1.eda_397_group1.MainActivity" />
+            android:label="@string/title_activity_login">
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
         <activity
             android:name=".Countdown"
-            android:label="Countdown"
-            android:parentActivityName=".MainActivity">
+            android:label="@string/CountdownActivity"
+            android:parentActivityName=".TaskListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.group1.eda_397_group1.MainActivity" />
+                android:value="com.group1.eda_397_group1.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/register"
+            android:parentActivityName=".LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.group1.eda_397_group1.RegisterActivity" />
         </activity>
     </application>
 
