@@ -2,7 +2,6 @@ package com.group1.eda_397_group1;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -10,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -127,9 +127,13 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
         if (json.get("success").equals(1)) {
             Log.d("RegisterActivity", "registering success");
 
+            Toast toast;
+            toast = Toast.makeText(getBaseContext(), R.string.register_successful, Toast.LENGTH_LONG);
+            toast.show();
             // Go to another activity and store user
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            //Intent intent = new Intent(this, LoginActivity.class);
+            //startActivity(intent);
+            finish();
         } else {
             Log.e("RegisterActivity", "registering error");
             new AlertDialog.Builder(RegisterActivity.this)
