@@ -28,6 +28,7 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
 
     private CustomListAdapter taskListAdapter;
     private ArrayList<Task> taskList;
+    private UserSingleton currentUser;
 
     private DatabaseHandler dbHandler;
     private JSONParser parser = new JSONParser();
@@ -47,7 +48,9 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
         refreshButton = (Button) findViewById(R.id.refreshButton);
         refreshButton.setClickable(true);
 
-        dbHandler = new DatabaseHandler(parser.getGetTasksInJSON("2@2.com"));
+        currentUser = UserSingleton.getInstance();
+        Log.i("TAskListActivity:UserEmail", currentUser.getEmail());
+        dbHandler = new DatabaseHandler(parser.getGetTasksInJSON(currentUser.getEmail()));
         dbHandler.delegate = this;
         dbHandler.execute();
 
@@ -137,6 +140,9 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
 
     @Override
     public void processFinish(JSONObject json) throws JSONException {
+        if(json == null){
+            return;
+        }
         if (json.get("success").equals(1)) {
             Log.d("Create task activity", "task created successfully");
 
