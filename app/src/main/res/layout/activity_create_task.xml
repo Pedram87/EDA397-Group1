@@ -44,7 +44,14 @@
         android:layout_weight="0.70"
         >
 
-
+        <View
+            android:id="@+id/separator1"
+            android:layout_below="@+id/firstLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0"
+            android:layout_gravity="center_vertical"
+            />
 
         <EditText
             android:id="@+id/taskName"
@@ -54,21 +61,41 @@
             android:layout_height="wrap_content"
             />
 
+        <View
+            android:id="@+id/separator2"
+            android:layout_below="@+id/firstLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0"
+            android:layout_gravity="center_vertical"
+            />
+
         <TextView
             android:id="@+id/taskOwnerLabel"
             android:text="Task Owner:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:layout_gravity="center_horizontal"
+            />
+
+        <View
+            android:id="@+id/separator5"
+            android:layout_below="@+id/firstLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0"
+            android:layout_gravity="center_vertical"
             />
 
         <TextView
             android:id="@+id/duration"
-            android:text="Total duration"
+            android:text="Total duration(Hours, Minutes)"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:layout_gravity="center_horizontal"
             />
 
@@ -76,16 +103,17 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp">
+            android:layout_gravity="center_horizontal">
 
             <NumberPicker
                 android:id="@+id/durationPickerHour"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                >
+                android:layout_height="100dp">
             </NumberPicker>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <NumberPicker
                 android:id="@+id/durationPickerMinute"
@@ -95,32 +123,41 @@
             </NumberPicker>
         </LinearLayout>
 
+        <View
+            android:id="@+id/separator3"
+            android:layout_below="@+id/firstLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0"
+            android:layout_gravity="center_vertical"
+            />
 
         <LinearLayout
             android:layout_gravity="center_horizontal"
             android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
-                android:text="Choose Team:"/>
+                android:text="Choose Team:"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_height="wrap_content"
-                android:text="randomize"
-                android:id="@+id/randomizeButton"
-                android:singleLine="true" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
 
             <LinearLayout
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5">
 
                 <android.support.v7.widget.AppCompatSpinner
                     android:id="@+id/user1"
@@ -136,18 +173,44 @@
                 </android.support.v7.widget.AppCompatSpinner>
 
             </LinearLayout>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:text="randomize"
+                    android:id="@+id/randomizeButton"
+                    android:layout_weight="0.5"
+                    android:singleLine="true" />
+
+            </LinearLayout>
         </LinearLayout>
 
+        <View
+            android:id="@+id/separator4"
+            android:layout_below="@+id/firstLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0"
+            android:layout_gravity="center_vertical"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="20dp">
 
         <Button
             android:id="@+id/createTaskButton"
             android:layout_gravity="center_horizontal"
             android:text="create Task"
-            android:layout_width="wrap_content"
+            android:background="#00FF00"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             />
-        
-        
+
+        </LinearLayout>
 
     </LinearLayout>
 
