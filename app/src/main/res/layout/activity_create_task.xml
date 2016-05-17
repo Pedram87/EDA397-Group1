@@ -205,7 +205,7 @@
             android:id="@+id/createTaskButton"
             android:layout_gravity="center_horizontal"
             android:text="create Task"
-            android:background="#00FF00"
+            android:background="#6ed16e"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             />
