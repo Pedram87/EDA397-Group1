@@ -24,10 +24,11 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
     //ListView
     private ListView taskListView;
     private Button createTaskButton;
-    private Button refreshButton;
+
 
     private CustomListAdapter taskListAdapter;
     private ArrayList<Task> taskList;
+    private UserSingleton currentUser;
 
     private DatabaseHandler dbHandler;
     private JSONParser parser = new JSONParser();
@@ -43,22 +44,14 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
         //Find the "createTaskButton"
         createTaskButton = (Button) findViewById(R.id.createTaskButton);
 
-        //Find the refresh button
-        refreshButton = (Button) findViewById(R.id.refreshButton);
-        refreshButton.setClickable(true);
 
-        dbHandler = new DatabaseHandler(parser.getGetTasksInJSON("2@2.com"));
+
+        currentUser = UserSingleton.getInstance();
+        Log.i("TAskListActy:UserEmail", currentUser.getEmail());
+        dbHandler = new DatabaseHandler(parser.getGetTasksInJSON(currentUser.getEmail()));
         dbHandler.delegate = this;
         dbHandler.execute();
 
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on click
-
-                taskListAdapter.update();
-
-            }
-        });
 
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -137,6 +130,9 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
 
     @Override
     public void processFinish(JSONObject json) throws JSONException {
+        if(json == null){
+            return;
+        }
         if (json.get("success").equals(1)) {
             Log.d("Create task activity", "task created successfully");
 
@@ -155,8 +151,8 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
 
             // Go to another activity and store user
         } else {
-            Log.e("LoginActivity", "login error");
-            new AlertDialog.Builder(TaskListActivity.this)
+            Log.e("TaskListActivity", json.get("error_msg").toString());
+/*            new AlertDialog.Builder(TaskListActivity.this)
                     .setTitle("Create Task failure")
                     .setMessage(json.get("error_msg").toString())
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -165,7 +161,7 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
                         }
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
+                    .show();*/
         }
     }
 

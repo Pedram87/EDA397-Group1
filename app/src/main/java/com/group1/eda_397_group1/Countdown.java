@@ -31,6 +31,7 @@ public class Countdown extends AppCompatActivity implements AsyncResponse {
     private Boolean isPaused;
     private DatabaseHandler databaseHandler = null;
     private JSONParser parser = new JSONParser();
+    private Intent in;
 
 
     @Override
@@ -43,6 +44,8 @@ public class Countdown extends AppCompatActivity implements AsyncResponse {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         isPaused = false;
 
+        in = getIntent();
+
         //timeLength = 8000;
         timeLeft = 0;
 //        timeText.setText("8");
@@ -51,7 +54,10 @@ public class Countdown extends AppCompatActivity implements AsyncResponse {
 
     //function with answer from db
     public void getTime() {
-        databaseHandler = new DatabaseHandler(parser.getGetTaskInJSON(9));
+        String id = in.getStringExtra("taskID");
+        int taskId = Integer.parseInt(id);
+
+        databaseHandler = new DatabaseHandler(parser.getGetTaskInJSON(taskId));
         databaseHandler.delegate = this;
         databaseHandler.execute();
 

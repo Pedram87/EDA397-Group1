@@ -1,23 +1,25 @@
 package com.group1.eda_397_group1;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.provider.ContactsContract;
+import android.os.Build;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -27,10 +29,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class CreateTaskActivity extends AppCompatActivity implements AsyncResponse{
@@ -44,6 +44,8 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
     Spinner user2Selector;
     ArrayAdapter<String> dataAdapter;
     ArrayAdapter<String> dataAdapter2;
+    private View mProgressView;
+    private View mcreatTaskFormView;
 
     private String currentUserID;
     /**
@@ -69,6 +71,9 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
         user1Selector = (Spinner) findViewById(R.id.user1);
         user2Selector = (Spinner) findViewById(R.id.user2);
         Button randomizeButton = (Button) findViewById(R.id.randomizeButton);
+
+        mProgressView = findViewById(R.id.createTask_progress);
+        mcreatTaskFormView = findViewById(R.id.createTaskForm);
 
         // Tasks and Users
         //getUserDataFromDatabaseTask = new GetUserDataFromDatabase();
@@ -108,6 +113,7 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
         });
 
 
+        assert createTaskButton != null;
         createTaskButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -116,6 +122,8 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
 
 
                 Log.e(" Create TAsk Activity", task.toString());
+                showProgress(true);
+
 
                 createTaskInRemoteDB(task);
 
@@ -198,8 +206,10 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
 
     @Override
     public void processFinish(JSONObject json) throws JSONException {
+
         String tag = json.getString("tag");
         // error_msg
+        Toast toast;
 
         if (json.get("success").equals(1)) {
             if(tag.equals("getAllUsers")){
@@ -207,7 +217,10 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
                 processRemoteUserData(json);
             }
             else if(tag.equals("create_task")){
-                Log.d("Create task activity", "task created successfully");
+                showProgress(false);
+                toast = Toast.makeText(getBaseContext(), "Task created successfully", Toast.LENGTH_LONG);
+                toast.show();
+                finish();
             }
 
 
@@ -247,6 +260,42 @@ public class CreateTaskActivity extends AppCompatActivity implements AsyncRespon
 
         dataAdapter.notifyDataSetChanged();
         dataAdapter2.notifyDataSetChanged();
+    }
+
+    /**
+     * Shows the progress UI and hides the login form.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mcreatTaskFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mcreatTaskFormView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mcreatTaskFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mcreatTaskFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 
 }
