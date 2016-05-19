@@ -34,6 +34,7 @@ public class Countdown extends AppCompatActivity implements AsyncResponse {
     private int sec;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -45,7 +46,6 @@ public class Countdown extends AppCompatActivity implements AsyncResponse {
         isPaused = false;
 
         in = getIntent();
-
         timeLeft = 0;
         getTime();
     }

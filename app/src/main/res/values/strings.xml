@@ -34,5 +34,6 @@
     <string name="repeat_password">Repeat password</string>
     <string name="username">Username</string>
     <string name="register">Register</string>
+    <string name="register_successful">Registering successfully completed!</string>
 
 </resources>
