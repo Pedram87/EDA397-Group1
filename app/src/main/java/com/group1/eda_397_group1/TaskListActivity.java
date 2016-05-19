@@ -24,7 +24,7 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
     //ListView
     private ListView taskListView;
     private Button createTaskButton;
-    private Button refreshButton;
+
 
     private CustomListAdapter taskListAdapter;
     private ArrayList<Task> taskList;
@@ -44,24 +44,14 @@ public class TaskListActivity extends AppCompatActivity implements AsyncResponse
         //Find the "createTaskButton"
         createTaskButton = (Button) findViewById(R.id.createTaskButton);
 
-        //Find the refresh button
-        refreshButton = (Button) findViewById(R.id.refreshButton);
-        refreshButton.setClickable(true);
+
 
         currentUser = UserSingleton.getInstance();
-        Log.i("TAskListActivity:UserEmail", currentUser.getEmail());
+        Log.i("TAskListActy:UserEmail", currentUser.getEmail());
         dbHandler = new DatabaseHandler(parser.getGetTasksInJSON(currentUser.getEmail()));
         dbHandler.delegate = this;
         dbHandler.execute();
 
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on click
-
-                taskListAdapter.update();
-
-            }
-        });
 
         taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
