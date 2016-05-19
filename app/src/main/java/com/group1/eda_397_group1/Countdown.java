@@ -92,21 +92,24 @@ public class Countdown extends AppCompatActivity implements AsyncResponse {
     public void startCount (View view) {
         final View v = view;
 
-        if(!isPaused){
-            start.setText("Pause Countdown");
-            isPaused = true;
+        if(timeLength > 0) {
+            if (!isPaused) {
+                start.setText("Pause Countdown");
+                isPaused = true;
 
-            if(timeLeft==0){
-                showCountdown(timeLength);
-            }
-            else{
-                showCountdown(timeLeft);
+                if (timeLeft == 0) {
+                    showCountdown(timeLength);
+                } else {
+                    showCountdown(timeLeft);
+                }
+            } else {
+                start.setText("Start Countdown");
+                isPaused = false;
+                cdTimer.cancel();
             }
         }
         else{
-            start.setText("Start Countdown");
-            isPaused = false;
-            cdTimer.cancel();
+            stopCount(view);
         }
     }
 
